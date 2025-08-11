@@ -1,35 +1,56 @@
-# NaijaNeighbour - NextDoor for Nigeria
+# Hommie Mobile App
 
-A community-focused mobile application designed to foster neighborhood connections, information exchange, and collaboration among individuals living in various neighborhoods across Nigeria.
+**NextDoor for Nigeria - Connect with your neighborhood community**
 
-## Features
+## 🚀 Project Overview
 
-- **Community Connection**: Connect with neighbors in your area
-- **Local Events**: Discover and organize neighborhood events
-- **Marketplace**: Buy, sell, and discover local services
-- **Safety Alerts**: Report and stay informed about local safety concerns
-- **Local News**: Stay updated with neighborhood happenings
-- **Messaging**: Direct and group communication with neighbors
+Hommie is a mobile application designed to foster community connection, information exchange, and collaboration among individuals living in various neighborhoods across Nigeria. The app allows users to interact with their neighbors, share local news, organize events, seek services, and offer recommendations, all within a trusted and geographically relevant environment.
 
-## Tech Stack
+## ✨ Features
+
+### Core Features (MVP)
+- **User Authentication**: Phone number + OTP verification
+- **Neighborhood Discovery**: Location-based community matching
+- **Community Feed**: Share and view local posts
+- **Events Management**: Create and join neighborhood events
+- **User Profiles**: Manage personal information and preferences
+
+### Advanced Features (Future Releases)
+- **Marketplace**: Buy, sell, and trade local items
+- **Safety Alerts**: Report and receive neighborhood safety updates
+- **Community Groups**: Interest-based neighborhood groups
+- **Local Services**: Directory of neighborhood service providers
+- **Push Notifications**: Stay updated on community activities
+
+## 🛠 Tech Stack
 
 - **Frontend**: React Native with Expo
-- **State Management**: Redux Toolkit
-- **Navigation**: React Navigation
-- **UI Components**: React Native Paper
-- **TypeScript**: Full TypeScript support
-- **Maps**: React Native Maps with Google Maps API
-- **Location**: Expo Location services
+- **Language**: TypeScript
+- **Navigation**: React Navigation v6
+- **UI Components**: React Native Paper + React Native Elements
+- **State Management**: React Hooks + Context API
+- **Storage**: AsyncStorage + SecureStore
+- **Location**: Expo Location + React Native Maps
+- **Notifications**: Expo Notifications
+- **Media**: Expo Image Picker + Camera
 
-## Prerequisites
+## 📱 Platform Support
 
-- Node.js (v16 or higher)
+- ✅ iOS (iPhone & iPad)
+- ✅ Android
+- ✅ Web (Progressive Web App)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
 - npm or yarn
-- Expo CLI (`npm install -g @expo/cli`)
+- Expo CLI
+- iOS Simulator (for iOS development)
 - Android Studio (for Android development)
-- Xcode (for iOS development, macOS only)
 
-## Installation
+### Installation
 
 1. **Clone the repository**
    ```bash
@@ -44,141 +65,150 @@ A community-focused mobile application designed to foster neighborhood connectio
    yarn install
    ```
 
-3. **Install Expo CLI globally** (if not already installed)
-   ```bash
-   npm install -g @expo/cli
-   ```
-
-4. **Start the development server**
+3. **Start the development server**
    ```bash
    npm start
    # or
    yarn start
-   # or
-   expo start
    ```
 
-## Project Structure
+4. **Run on device/simulator**
+   ```bash
+   # iOS
+   npm run ios
+   
+   # Android
+   npm run android
+   
+   # Web
+   npm run web
+   ```
+
+## 📁 Project Structure
 
 ```
 src/
 ├── components/          # Reusable UI components
 ├── screens/            # Screen components
-│   ├── auth/          # Authentication screens
-│   └── ...            # Other screen categories
 ├── navigation/         # Navigation configuration
-├── store/             # Redux store and slices
-├── contexts/          # React Context providers
-├── types/             # TypeScript type definitions
-├── utils/             # Utility functions
-├── constants/         # App constants
-└── assets/            # Images, fonts, etc.
+├── services/           # API and external services
+├── utils/              # Helper functions
+├── types/              # TypeScript type definitions
+├── hooks/              # Custom React hooks
+├── constants/          # App constants
+└── assets/             # Images, fonts, etc.
 ```
 
-## Development
+## 🔧 Development
 
 ### Available Scripts
 
-- `npm start` - Start the Expo development server
-- `npm run android` - Run on Android device/emulator
-- `npm run ios` - Run on iOS device/simulator
-- `npm run web` - Run in web browser
-- `npm test` - Run tests
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
+- `npm start` - Start Expo development server
+- `npm run ios` - Run on iOS simulator
+- `npm run android` - Run on Android emulator
+- `npm run web` - Run on web browser
+- `npm run build` - Build for production
+- `npm run eject` - Eject from Expo managed workflow
 
-### Environment Setup
+### Code Style
 
-1. **Create environment file**
-   ```bash
-   cp .env.example .env
-   ```
+- Use TypeScript for all new code
+- Follow React Native best practices
+- Use functional components with hooks
+- Implement proper error handling
+- Write meaningful component and function names
 
-2. **Configure environment variables**
-   ```env
-   EXPO_PUBLIC_API_URL=your_api_url_here
-   EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-   EXPO_PUBLIC_SMS_SERVICE_KEY=your_sms_service_key
-   ```
+### Testing
 
-### API Configuration
+- Unit tests for utility functions
+- Integration tests for API calls
+- E2E tests for critical user flows
+- Manual testing on various devices
 
-The app is configured to work with a backend API. Update the API endpoints in the Redux slices and API service files according to your backend implementation.
+## 📱 App Screens
 
-## Building for Production
+### Authentication
+- **Login Screen**: Phone number + OTP verification
+- **Register Screen**: User registration with neighborhood selection
 
-### Android
+### Main App
+- **Home Screen**: Quick actions and recent activity
+- **Feed Screen**: Community posts and updates
+- **Events Screen**: Local events and calendar
+- **Marketplace Screen**: Buy/sell items and services
+- **Profile Screen**: User profile and settings
 
-1. **Build APK**
-   ```bash
-   expo build:android -t apk
-   ```
+## 🔐 Environment Variables
 
-2. **Build AAB (Google Play Store)**
-   ```bash
-   expo build:android -t app-bundle
-   ```
+Create a `.env` file in the root directory:
 
-### iOS
+```env
+EXPO_PUBLIC_API_URL=https://api.hommie.ng
+EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+EXPO_PUBLIC_SMS_SERVICE_API_KEY=your_sms_service_api_key
+```
 
-1. **Build for App Store**
-   ```bash
-   expo build:ios
-   ```
+## 📊 Development Phases
 
-## Contributing
+### Phase 1: Foundation (Months 1-2)
+- [x] Project setup and configuration
+- [x] Basic navigation structure
+- [x] Screen components
+- [ ] Authentication system
+- [ ] Basic UI components
+
+### Phase 2: Core Features (Months 3-4)
+- [ ] User profiles and neighborhoods
+- [ ] Community feed
+- [ ] Events system
+- [ ] Basic marketplace
+
+### Phase 3: Advanced Features (Months 5-6)
+- [ ] Safety alerts
+- [ ] Community groups
+- [ ] Payment integration
+- [ ] Advanced notifications
+
+### Phase 4: Polish (Month 7)
+- [ ] Performance optimization
+- [ ] UI/UX improvements
+- [ ] Testing and bug fixes
+
+### Phase 5: Launch (Month 8)
+- [ ] Final testing
+- [ ] App store submission
+- [ ] Marketing launch
+
+## 🚨 Known Issues
+
+- Some dependencies may show deprecation warnings (these are being addressed)
+- Vector icons package needs migration to new model
+- ESLint version needs updating
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## Development Guidelines
+## 📄 License
 
-- Follow the existing code style and structure
-- Write TypeScript interfaces for all data structures
-- Use Redux Toolkit for state management
-- Implement proper error handling
-- Write tests for new features
-- Follow React Native best practices
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Troubleshooting
+## 📞 Support
 
-### Common Issues
+- **Email**: support@hommie.ng
+- **Website**: https://hommie.ng
+- **Documentation**: [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md)
 
-1. **Metro bundler issues**
-   ```bash
-   npm start -- --clear
-   ```
+## 🙏 Acknowledgments
 
-2. **iOS build issues**
-   ```bash
-   cd ios && pod install && cd ..
-   ```
+- Expo team for the amazing development platform
+- React Native community for continuous improvements
+- Nigerian tech community for inspiration and support
 
-3. **Android build issues**
-   ```bash
-   cd android && ./gradlew clean && cd ..
-   ```
+---
 
-### Getting Help
-
-- Check the [Expo documentation](https://docs.expo.dev/)
-- Review [React Native documentation](https://reactnative.dev/)
-- Search existing issues in the repository
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
-
-## Roadmap
-
-See [DEVELOPMENT_LOG.md](./DEVELOPMENT_LOG.md) for detailed development phases and milestones.
+**Built with ❤️ for Nigerian communities**
