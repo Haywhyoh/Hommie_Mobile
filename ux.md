@@ -1,27 +1,33 @@
-# Nigerian Community App Style Guide
-*React Native/Expo Cross-Platform Design System*
+# Hommie Community App Style Guide
+*Modern Nigerian Neighborhood Design System*
 
 ## 🎨 Brand Colors
 
-### Primary Colors
-- **Primary Green**: `#00A651` - Nigeria's green, main brand color
-- **Deep Green**: `#007A3D` - For pressed states, emphasis
-- **Light Green**: `#E8F5E8` - Backgrounds, subtle highlights
-- **Mint Green**: `#B8E6B8` - Success states, positive feedback
+### Primary Palette - Community Trust
+- **Hommie Green**: `#00A651` - Nigeria's pride, main brand color for trust
+- **Deep Forest**: `#006B3C` - For pressed states, depth, security
+- **Sage Light**: `#E8F5E8` - Gentle backgrounds, peaceful spaces
+- **Community Mint**: `#B8E6B8` - Success states, positive connections
 
-### Neutral Colors
-- **Pure White**: `#FFFFFF` - Main background, cards
-- **Off White**: `#FAFAFA` - Secondary backgrounds
-- **Light Gray**: `#F5F5F5` - Dividers, disabled states
-- **Medium Gray**: `#8E8E8E` - Secondary text, placeholders
-- **Dark Gray**: `#2C2C2C` - Primary text, headings
-- **Black**: `#000000` - High contrast text
+### Neutral Foundation - Clean & Approachable
+- **Pure White**: `#FFFFFF` - Clean backgrounds, cards, fresh starts
+- **Warm Off-White**: `#FAFAFA` - Secondary backgrounds, comfort
+- **Soft Gray**: `#F5F5F5` - Gentle dividers, non-intrusive elements
+- **Friendly Gray**: `#8E8E8E` - Secondary text, approachable guidance
+- **Rich Charcoal**: `#2C2C2C` - Primary text, strong hierarchy
+- **Deep Black**: `#000000` - High contrast, important information
 
-### Accent Colors
-- **Orange**: `#FF6B35` - Notifications, warnings, calls-to-action
-- **Blue**: `#0066CC` - Links, information, trust indicators
-- **Red**: `#E74C3C` - Errors, urgent notifications
-- **Yellow**: `#FFC107` - Alerts, pending states
+### Accent Colors - Local Energy
+- **Lagos Orange**: `#FF6B35` - Energy, community alerts, celebrations
+- **Trust Blue**: `#0066CC` - Links, reliability, helpful information
+- **Safety Red**: `#E74C3C` - Urgent alerts, safety notifications
+- **Warm Gold**: `#FFC107` - Achievements, highlights, joy
+
+### Community-Specific Colors
+- **Neighbor Purple**: `#7B68EE` - Community connections, social features
+- **Market Green**: `#228B22` - Local business, marketplace
+- **Evening Blue**: `#4682B4` - Events, gatherings, nighttime activities
+- **Sunrise Pink**: `#FF69B4` - Celebrations, positive news, community joy
 
 ## 📱 Typography
 
@@ -159,20 +165,29 @@ color: '#2C2C2C'
 - **Distance**: Use kilometers (km) and meters (m)
 - **Emergency Numbers**: Include local emergency services
 
-## 🎯 UX Guidelines
+## 🎯 Modern Community UX Guidelines
 
-### Navigation Patterns
-- **Bottom Tab Navigation** for main sections
-- **Stack Navigation** for drill-down flows
-- **Modal Presentation** for create/edit actions
-- **Swipe Gestures** for dismissible actions
+### Navigation Philosophy - "Neighborhood First"
+- **Bottom Tab Navigation** with community-focused icons and labels
+- **Gesture-First Design** - Swipe between community sections naturally
+- **Progressive Disclosure** - Show relevant info when needed, hide complexity
+- **Context-Aware Navigation** - Location and time-sensitive navigation
 
-### Information Architecture
-1. **Home/Feed** - Community updates, local news
-2. **Explore/Directory** - Local businesses, services
-3. **Safety/Security** - Alerts, emergency contacts
-4. **Messages** - Direct communication
-5. **Profile/Account** - User settings, preferences
+### Information Architecture - "Your Digital Neighborhood"
+1. **Community Hub** - Local updates, neighbor connections, safety updates
+2. **Neighborhood Directory** - Local businesses, services, trusted recommendations  
+3. **Events & Activities** - Community gatherings, local celebrations
+4. **Marketplace** - Buy, sell, share within your community
+5. **Safety Network** - Emergency contacts, safety alerts, neighborhood watch
+6. **Your Profile** - Personal community presence and preferences
+
+### Modern UX Patterns
+- **Contextual Onboarding** - Progressive introduction to features
+- **Community-Centric Design** - Always show local context and neighbors
+- **Trust Indicators** - Verification badges, community endorsements
+- **Inclusive Accessibility** - Works for all ages and tech comfort levels
+- **Offline-Ready** - Core features work without internet
+- **Privacy-First** - Clear controls over what neighbors can see
 
 ### Interaction States
 - **Default State**: Clean, unambiguous
@@ -269,5 +284,98 @@ When using this style guide to recreate app pages:
 6. **Prioritize safety** - Include trust indicators and safety features
 7. **Mobile-first** - Design for touch interaction and small screens
 8. **Test accessibility** - Ensure sufficient contrast and touch targets
+
+## 🚀 Modern Onboarding Experience
+
+### Onboarding Philosophy - "Welcome to Your Digital Neighborhood"
+- **Story-Driven Approach** - Show real community benefits, not features
+- **Progressive Trust Building** - Build confidence step by step
+- **Cultural Relevance** - Use familiar Nigerian contexts and language
+- **Quick Wins Early** - Show immediate value before asking for commitment
+
+### Onboarding Flow Structure
+1. **Cultural Welcome** - Language selection with local context
+2. **Community Vision** - Show what makes neighborhoods better
+3. **Trust & Safety** - Explain verification and privacy
+4. **Location Connection** - Help users find their digital neighborhood
+5. **First Connections** - Introduce them to their new community
+
+### Modern UI Components for Onboarding
+
+#### Hero Cards
+```javascript
+backgroundColor: '#FFFFFF'
+borderRadius: 20
+padding: 24
+marginHorizontal: 16
+shadowColor: '#00A651'
+shadowOpacity: 0.08
+shadowRadius: 16
+elevation: 8
+```
+
+#### Progress Indicators
+```javascript
+// Friendly dots instead of harsh progress bars
+activeColor: '#00A651'
+inactiveColor: '#E8F5E8'
+size: 12
+spacing: 8
+```
+
+#### Community-Focused CTAs
+```javascript
+primaryButton: {
+  backgroundColor: '#00A651'
+  borderRadius: 16
+  paddingVertical: 16
+  paddingHorizontal: 32
+  marginBottom: 12
+}
+
+secondaryButton: {
+  backgroundColor: 'transparent'
+  borderColor: '#00A651'
+  borderWidth: 2
+  borderRadius: 16
+  paddingVertical: 14
+  paddingHorizontal: 32
+}
+
+ghostButton: {
+  backgroundColor: 'transparent'
+  paddingVertical: 12
+  paddingHorizontal: 16
+  underlineColor: '#00A651'
+}
+```
+
+### Nigerian Cultural Elements
+
+#### Local Context Integration
+- **Estate/Compound Terminology** - Use familiar housing terms
+- **Community Greetings** - "Welcome to your digital compound"
+- **Local Success Stories** - Show how neighbors help neighbors
+- **Safety First Mindset** - Address security concerns early
+
+#### Trust Building Elements
+- **Verification Badges** - Clear, recognizable trust indicators
+- **Community Testimonials** - Real neighbor success stories
+- **Privacy Controls** - Granular, easy-to-understand settings
+- **Local Authority Endorsements** - Where applicable
+
+### Accessibility & Inclusion
+
+#### Multi-Generational Design
+- **Large Touch Targets** - Minimum 48px for all ages
+- **Clear Visual Hierarchy** - Easy to scan for seniors
+- **Simple Language** - Avoid tech jargon
+- **Voice-Over Support** - Full screen reader compatibility
+
+#### Digital Literacy Friendly
+- **Contextual Help** - Subtle hints and tips
+- **Error Prevention** - Guide users away from mistakes
+- **Undo Actions** - Always allow easy reversal
+- **Progressive Complexity** - Start simple, add features gradually
 
 This style guide should be referenced for every UI element to maintain consistency across the entire application.

@@ -7,12 +7,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 
 // Import screens
 import WelcomeScreen from './src/screens/WelcomeScreen';
-import OnboardingScreen from './src/screens/OnboardingScreen';
-import LocationSelectionScreen from './src/screens/LocationSelectionScreen';
-import InvitationCodeScreen from './src/screens/InvitationCodeScreen';
-import LocationAccessScreen from './src/screens/LocationAccessScreen';
+import WelcomeLanguageScreen from './src/screens/WelcomeLanguageScreen';
 import PhoneVerificationScreen from './src/screens/PhoneVerificationScreen';
 import OTPVerificationScreen from './src/screens/OTPVerificationScreen';
+import LocationSetupScreen from './src/screens/LocationSetupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import FeedScreen from './src/screens/FeedScreen';
 import EventsScreen from './src/screens/EventsScreen';
@@ -21,6 +19,12 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 
+// Legacy screens (keeping for backward compatibility)
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import LocationSelectionScreen from './src/screens/LocationSelectionScreen';
+import InvitationCodeScreen from './src/screens/InvitationCodeScreen';
+import LocationAccessScreen from './src/screens/LocationAccessScreen';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -28,9 +32,14 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#00A651', // Using Nigerian green from style guide
+        tabBarInactiveTintColor: '#8E8E8E',
         headerShown: false,
+        tabBarStyle: {
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 8,
+        },
       }}
     >
       <Tab.Screen 
@@ -112,12 +121,33 @@ export default function App() {
         {isAuthenticated ? (
           <TabNavigator />
         ) : (
-          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="WelcomeLanguage">
+            {/* New User Flow */}
+            <Stack.Screen 
+              name="WelcomeLanguage" 
+              component={WelcomeLanguageScreen}
+            />
+            <Stack.Screen 
+              name="PhoneVerification" 
+              component={PhoneVerificationScreen}
+            />
+            <Stack.Screen 
+              name="OTPVerification" 
+              component={OTPVerificationScreen}
+            />
+            <Stack.Screen 
+              name="LocationSetup" 
+              component={LocationSetupScreen}
+            />
+            
+            {/* Existing User Flow */}
             <Stack.Screen 
               name="Welcome" 
               component={WelcomeScreen}
               initialParams={{ onSocialLoginSuccess: handleSocialLoginSuccess }}
             />
+            
+            {/* Legacy Onboarding Screens (keeping for backward compatibility) */}
             <Stack.Screen 
               name="Onboarding" 
               component={OnboardingScreen}
@@ -134,24 +164,16 @@ export default function App() {
               name="LocationAccess" 
               component={LocationAccessScreen}
             />
-            <Stack.Screen 
-              name="PhoneVerification" 
-              component={PhoneVerificationScreen}
-            />
-            <Stack.Screen 
-              name="OTPVerification" 
-              component={OTPVerificationScreen}
-            />
-            <Stack.Screen 
-              name="AddressConfirmation" 
-              component={RegisterScreen}
-            />
+            
+            {/* Authentication Screens */}
             <Stack.Screen 
               name="Login" 
               component={LoginScreen}
               initialParams={{ onLoginSuccess: handleLoginSuccess }}
             />
             <Stack.Screen name="Register" component={RegisterScreen} />
+            
+            {/* Main App */}
             <Stack.Screen 
               name="Home" 
               component={TabNavigator}

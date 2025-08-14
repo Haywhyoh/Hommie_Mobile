@@ -23,7 +23,7 @@ export default function OnboardingScreen({ navigation }: any) {
         </View>
 
         {/* Features */}
-        <View style={styles.features}>
+        {/* <View style={styles.features}>
           <View style={styles.feature}>
             <Text style={styles.featureIcon}>🏠</Text>
             <Text style={styles.featureTitle}>Connect with Neighbors</Text>
@@ -47,7 +47,7 @@ export default function OnboardingScreen({ navigation }: any) {
               Share recommendations, offer help, and support your community
             </Text>
           </View>
-        </View>
+        </View> */}
 
         {/* Action Buttons */}
         <View style={styles.actions}>

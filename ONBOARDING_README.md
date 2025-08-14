@@ -1,185 +1,216 @@
-# Hommie Onboarding Flow
+# Hommie Mobile App - New Onboarding Flow
 
-This document describes the comprehensive onboarding flow for the Hommie mobile app, designed specifically for Nigerian communities.
+## Overview
+This document describes the new streamlined onboarding flow for the Hommie mobile app, designed specifically for Nigerian users. The flow now separates new users from existing users and shows welcome content before language selection.
 
-## 🎯 Overview
+## Flow Structure
 
-The onboarding flow consists of 6 sequential steps that guide new users through the process of joining their local community:
+### **New User Flow**
 
-1. **Welcome** - App introduction and features overview
-2. **Invitation** - Enter invitation code and zip code
-3. **Location** - Select city and state
-4. **Address** - Confirm street address and neighborhood
-5. **Verification** - Choose verification method
-6. **Phone** - Enter phone number for verification
+#### Step 1: Welcome + Features Preview
+- **Screen**: `WelcomeLanguageScreen` (Welcome View)
+- **Purpose**: Welcome new users and showcase app features
+- **Features**:
+  - App logo and branding
+  - One-line value proposition: "Local updates, security alerts, and neighbors—right where you live."
+  - Feature previews (Connect with Neighbors, Stay Informed, Help Each Other)
+  - Primary CTA: "Get Started"
+  - Secondary option: "I already have an account"
 
-## 🎨 Design System
+#### Step 2: Language Selection
+- **Screen**: `WelcomeLanguageScreen` (Language View)
+- **Purpose**: Allow new users to choose their preferred language
+- **Features**:
+  - Language selection: English, Hausa, Yoruba, Igbo
+  - Back button to return to welcome content
+  - Continue button to proceed with selected language
 
-The onboarding screens follow the Nigerian Style Guide (`ux.md`) with:
+#### Step 3: Phone Number → OTP Verification
+- **Screen**: `PhoneVerificationScreen`
+- **Purpose**: Verify user's phone number for account creation
+- **Features**:
+  - Nigerian phone number input (+234 country code)
+  - Automatic carrier detection (MTN, Airtel, Glo, 9mobile)
+  - OTP via SMS
+  - Skip option for users who don't want phone verification
+  - Info box about message rates
 
-- **Primary Color**: Nigeria Green (#00A651)
-- **Typography**: Clear hierarchy with Nigerian context
-- **Spacing**: Consistent 8px grid system
-- **Components**: Modern, accessible UI elements
+- **Screen**: `OTPVerificationScreen`
+- **Purpose**: Verify the 6-digit OTP code
+- **Features**:
+  - 6-digit OTP input with auto-focus
+  - 30-second countdown timer
+  - Resend code option
+  - Fallback options:
+    - Call-me verification
+    - USSD code verification (*123*1#)
+  - Success navigation to location setup
 
-## 📱 Screens
+#### Step 4: Location Setup (Multi-path)
+- **Screen**: `LocationSetupScreen`
+- **Purpose**: Allow users to set their location through multiple methods
+- **Features**:
+  - **Option A**: "Use GPS" (Recommended)
+    - Automatic location detection
+    - Permission request handling
+  - **Option B**: "Pick on Map"
+    - Map-based location selection
+    - Drag and drop pin functionality
+  - **Option C**: "Choose Landmark"
+    - Search nearby landmarks (schools, churches, markets, major roads)
+    - Distance indicators
+    - Manual address input option
+    - Estate/compound database integration
 
-### WelcomeScreen
-- Entry point to the app
-- App logo and tagline
-- Feature preview
-- Options to start onboarding or sign in
+### **Existing User Flow**
 
-### OnboardingScreen
-- Multi-step flow with horizontal pagination
-- Progress indicators
-- Form validation
-- Navigation between steps
+#### Step 1: Welcome Screen
+- **Screen**: `WelcomeScreen`
+- **Purpose**: Welcome existing users back to the app
+- **Features**:
+  - Background image with overlay
+  - App branding and tagline
+  - Social login options (Google, Apple, Facebook, Email)
+  - Language selector (EN (NG))
+  - Invitation code option
 
-## 🗂️ File Structure
+## Navigation Flow
 
+### New Users
 ```
-src/
-├── screens/
-│   ├── WelcomeScreen.tsx          # Entry point
-│   ├── OnboardingScreen.tsx       # Multi-step onboarding
-│   └── LoginScreen.tsx            # Updated with Nigerian styling
-├── constants/
-│   ├── index.ts                   # Updated with Nigerian colors
-│   └── onboardingData.ts          # Demo data and content
-└── types/
-    └── index.ts                   # Updated navigation types
+WelcomeLanguage (Welcome View) → WelcomeLanguage (Language View) → PhoneVerification → OTPVerification → LocationSetup → Home
 ```
 
-## 🚀 Usage
-
-### Navigation Flow
-```typescript
-// Start the app
-navigation.navigate('Welcome');
-
-// Begin onboarding
-navigation.navigate('Onboarding');
-
-// Complete onboarding
-navigation.navigate('Login');
+### Existing Users
+```
+WelcomeLanguage (Welcome View) → "I already have an account" → Welcome → Social Login/Email → Home
 ```
 
-### Demo Data
-The onboarding uses imported demo data from `onboardingData.ts`:
+## Key Features
 
-```typescript
-import { ONBOARDING_DATA, SAMPLE_INVITATION_CODES } from '../constants/onboardingData';
+### Nigerian Context
+- **Language Support**: English, Hausa, Yoruba, Igbo
+- **Carrier Detection**: Automatic detection of MTN, Airtel, Glo, 9mobile
+- **USSD Fallback**: Carrier-specific USSD codes for verification
+- **Local Landmarks**: Nigerian-specific landmarks and locations
+- **Currency**: Naira (₦) support
+- **Phone Format**: +234 country code support
 
-// Access demo data
-const features = ONBOARDING_DATA.features;
-const locations = ONBOARDING_DATA.locations;
+### User Experience
+- **Progressive Disclosure**: Information revealed as needed
+- **Skip Options**: Users can skip certain steps
+- **Fallback Methods**: Multiple verification options
+- **Clear CTAs**: Unambiguous next steps
+- **Loading States**: Visual feedback during operations
+- **User Separation**: Clear distinction between new and existing users
+
+### Technical Implementation
+- **React Native**: Cross-platform mobile development
+- **Navigation**: React Navigation with stack navigation
+- **State Management**: Local state with React hooks
+- **Styling**: Nigerian style guide compliance
+- **Accessibility**: Screen reader support and touch targets
+
+## Style Guide Compliance
+
+### Colors
+- **Primary Green**: #00A651 (Nigeria's green)
+- **Deep Green**: #007A3D (Pressed states)
+- **Light Green**: #E8F5E8 (Backgrounds)
+- **Mint Green**: #B8E6B8 (Success states)
+
+### Typography
+- **System Fonts**: iOS and Android native fonts
+- **Hierarchy**: Clear heading and body text distinction
+- **Sizes**: 12px to 36px scale following 8px grid
+
+### Spacing
+- **8px Grid System**: Consistent spacing throughout
+- **Screen Padding**: 16px horizontal, 24px top
+- **Component Spacing**: 16px between related elements
+
+## Future Enhancements
+
+### Phase 2
+- **Map Integration**: Google Maps or Mapbox integration
+- **Address Autocomplete**: Smart address suggestions
+- **Estate Database**: Comprehensive Nigerian estate/compound database
+- **Multi-language Content**: Localized content for all supported languages
+
+### Phase 3
+- **Biometric Authentication**: Fingerprint/Face ID support
+- **Social Login**: Google, Facebook, Apple integration
+- **Advanced Location**: Indoor mapping and precise location
+- **Offline Support**: Offline-first approach for poor connectivity
+
+## Testing Considerations
+
+### User Testing
+- **Nigerian Users**: Test with actual Nigerian users
+- **Language Testing**: Verify all language options work correctly
+- **Carrier Testing**: Test with different Nigerian carriers
+- **Location Testing**: Test GPS and landmark selection
+- **User Flow Testing**: Test both new and existing user paths
+
+### Technical Testing
+- **Cross-platform**: iOS and Android compatibility
+- **Network Conditions**: Poor connectivity scenarios
+- **Device Compatibility**: Various screen sizes and OS versions
+- **Performance**: Loading times and smooth animations
+
+## Implementation Notes
+
+### Current Status
+- ✅ Welcome content with features preview
+- ✅ Language selection screen
+- ✅ Phone verification with carrier detection
+- ✅ OTP verification with fallbacks
+- ✅ Location setup with multiple options
+- ✅ Navigation flow integration
+- ✅ Nigerian style guide compliance
+- ✅ Separation of new vs existing users
+
+### Next Steps
+- 🔄 Map picker functionality
+- 🔄 GPS location implementation
+- 🔄 Landmark search API integration
+- 🔄 Estate database integration
+- 🔄 Multi-language content
+- 🔄 Testing and refinement
+
+## File Structure
+```
+src/screens/
+├── WelcomeLanguageScreen.tsx      # New users: Welcome + Language
+├── WelcomeScreen.tsx              # Existing users: Social login
+├── PhoneVerificationScreen.tsx    # Phone input
+├── OTPVerificationScreen.tsx      # OTP verification
+├── LocationSetupScreen.tsx        # Location setup
+└── [legacy screens...]           # Backward compatibility
+
+src/constants/
+├── index.ts                       # Main constants
+├── onboardingData.ts             # Onboarding-specific data
+└── demoData.ts                   # Demo data for testing
+
+App.tsx                           # Main navigation configuration
 ```
 
-## 🎭 Demo Content
+## Support and Maintenance
 
-### Nigerian Locations
-- Ikeja, Lagos
-- Garki, Abuja
-- Victoria Island, Lagos
-- Wuse, Abuja
-- Lekki, Lagos
+### Documentation
+- Keep this README updated with any flow changes
+- Document new features and modifications
+- Maintain style guide compliance notes
 
-### Sample Invitation Codes
-- HOMIE2024
-- LAGOS001
-- ABUJA2024
-- COMMUNITY
-- NEIGHBOR
-
-### Sample Zip Codes
-- 100001 (Lagos)
-- 900001 (Abuja)
-- 500001 (Port Harcourt)
-- 400001 (Kano)
-- 300001 (Ibadan)
-
-## 🔧 Customization
-
-### Adding New Steps
-1. Add step to `onboardingSteps` array
-2. Create step component function
-3. Add validation logic to `validateStep`
-4. Update navigation logic
-
-### Modifying Content
-1. Edit `onboardingData.ts` for content changes
-2. Update constants in `index.ts` for styling
-3. Modify individual step components as needed
-
-## 📋 Features
-
-- **Progress Tracking**: Visual progress indicators
-- **Form Validation**: Step-by-step validation
-- **Keyboard Handling**: Proper keyboard avoidance
-- **Responsive Design**: Works on all screen sizes
-- **Accessibility**: Screen reader support
-- **Nigerian Context**: Local locations and culture
-
-## 🎨 Styling
-
-All styles follow the Nigerian Style Guide:
-
-- **Colors**: Primary green (#00A651), proper contrast
-- **Typography**: Clear hierarchy, readable fonts
-- **Spacing**: Consistent 8px grid system
-- **Components**: Modern, accessible design
-- **Shadows**: Subtle depth and elevation
-
-## 🚨 Validation Rules
-
-- **Invitation**: Code and zip code required
-- **Location**: Must select a city
-- **Address**: Street address required
-- **Verification**: Method selection required
-- **Phone**: 10-digit number required
-
-## 🔄 State Management
-
-The onboarding uses React state to track:
-- Current step
-- Form inputs
-- Selections
-- Validation status
-
-## 📱 Platform Support
-
-- **iOS**: Native iOS patterns and gestures
-- **Android**: Material Design principles
-- **Cross-platform**: Consistent experience
-
-## 🧪 Testing
-
-### Demo Mode
-- Use sample invitation codes for testing
-- Sample zip codes for location testing
-- Demo user data for verification
-
-### Validation Testing
-- Test each step's validation
-- Verify navigation between steps
-- Check form submission
-
-## 🚀 Next Steps
-
-1. **Integration**: Connect to backend APIs
-2. **Analytics**: Track onboarding completion rates
-3. **A/B Testing**: Test different flows
-4. **Localization**: Add more Nigerian languages
-5. **Accessibility**: Enhance screen reader support
-
-## 📚 Resources
-
-- [Nigerian Style Guide](ux.md)
-- [React Native Documentation](https://reactnative.dev/)
-- [Expo Documentation](https://docs.expo.dev/)
-- [Nigerian Community Guidelines](PRD.txt)
+### Code Quality
+- Follow React Native best practices
+- Maintain consistent styling and structure
+- Regular code reviews and testing
+- Performance monitoring and optimization
 
 ---
 
-**Note**: This onboarding flow is designed specifically for Nigerian users and communities. All content, locations, and cultural references are tailored to the Nigerian context.
+*Last updated: [Current Date]*
+*Version: 1.1.0*
+*Maintainer: Development Team*

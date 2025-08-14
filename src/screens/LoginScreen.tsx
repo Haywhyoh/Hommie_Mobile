@@ -42,7 +42,6 @@ export default function LoginScreen({ navigation, route }: any) {
             >
               <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>
-            <Text style={styles.title}>If you have received an invitation code from a neighbor, enter it here</Text>
           </View>
 
           {/* Form */}

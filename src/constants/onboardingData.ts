@@ -3,10 +3,38 @@ export const ONBOARDING_DATA = {
   welcome: {
     title: "Welcome to Hommie",
     subtitle: "Your Nigerian Neighborhood Community",
-    description: "Connect with neighbors, discover local events, and stay informed about your community.",
+    description: "Local updates, security alerts, and neighbors—right where you live.",
     image: require('../../assets/icon.png'), // Using existing icon as placeholder
     backgroundColor: "#00A651"
   },
+  
+  // Nigerian Mobile Carriers
+  carriers: [
+    {
+      name: 'MTN',
+      codes: ['080', '081', '090', '070', '091', '0816', '0813', '0814', '0810', '0811', '0812', '0703', '0706', '0704', '0705', '0708', '0709', '0903', '0906', '0904', '0905', '0908', '0909'],
+      color: '#FFC107',
+      ussdCode: '*123*1#'
+    },
+    {
+      name: 'Airtel',
+      codes: ['0802', '0808', '0708', '0812', '0701', '0902', '0901', '0809', '0811', '0708', '0810', '0907', '0908', '0909', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909'],
+      color: '#E74C3C',
+      ussdCode: '*123*1#'
+    },
+    {
+      name: 'Glo',
+      codes: ['0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905'],
+      color: '#00A651',
+      ussdCode: '*123*1#'
+    },
+    {
+      name: '9mobile',
+      codes: ['0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818'],
+      color: '#0066CC',
+      ussdCode: '*123*1#'
+    }
+  ],
   
   features: [
     {

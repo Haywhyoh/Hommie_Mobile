@@ -1,24 +1,69 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
 
-export default function PhoneVerificationScreen({ navigation }: any) {
+const NIGERIAN_CARRIERS = [
+  { name: 'MTN', codes: ['080', '081', '090', '070', '091', '0816', '0813', '0814', '0810', '0811', '0812', '0703', '0706', '0704', '0705', '0708', '0709', '0903', '0906', '0904', '0905', '0908', '0909'] },
+  { name: 'Airtel', codes: ['0802', '0808', '0708', '0812', '0701', '0902', '0901', '0809', '0811', '0708', '0810', '0907', '0908', '0909', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909'] },
+  { name: 'Glo', codes: ['0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905'] },
+  { name: '9mobile', codes: ['0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818'] },
+];
+
+export default function PhoneVerificationScreen({ navigation, route }: any) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+234');
+  const [detectedCarrier, setDetectedCarrier] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    if (phoneNumber.length >= 10) {
-      // TODO: Implement phone verification logic
-      console.log('Phone verification submitted:', { countryCode, phoneNumber });
-      // Navigate to OTP verification or next step
-      navigation.navigate('OTPVerification', { phoneNumber: `${countryCode}${phoneNumber}` });
+  const language = route.params?.language || 'en';
+
+  // Detect carrier based on phone number prefix
+  useEffect(() => {
+    if (phoneNumber.length >= 3) {
+      const prefix = phoneNumber.substring(0, 3);
+      const carrier = NIGERIAN_CARRIERS.find(c => c.codes.includes(prefix));
+      setDetectedCarrier(carrier ? carrier.name : null);
+    } else {
+      setDetectedCarrier(null);
+    }
+  }, [phoneNumber]);
+
+  const handleSubmit = async () => {
+    if (phoneNumber.length < 10) {
+      Alert.alert('Invalid Number', 'Please enter a valid Nigerian phone number');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // TODO: Implement actual phone verification logic
+      console.log('Phone verification submitted:', { countryCode, phoneNumber, carrier: detectedCarrier });
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      navigation.navigate('OTPVerification', { 
+        phoneNumber: `${countryCode}${phoneNumber}`,
+        carrier: detectedCarrier,
+        language 
+      });
+    } catch (error) {
+      Alert.alert('Error', 'Failed to send verification code. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSkip = () => {
-    // TODO: Handle skip logic
-    console.log('Phone verification skipped');
-    navigation.navigate('AddressConfirmation');
+    Alert.alert(
+      'Skip Phone Verification?',
+      'Phone verification helps keep our community safe. You can still proceed, but some features may be limited.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Skip', onPress: () => navigation.navigate('LocationSetup', { language }) }
+      ]
+    );
   };
 
   return (
@@ -33,6 +78,12 @@ export default function PhoneVerificationScreen({ navigation }: any) {
           {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.backButtonText}>←</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
               style={styles.skipButton}
               onPress={handleSkip}
             >
@@ -43,33 +94,54 @@ export default function PhoneVerificationScreen({ navigation }: any) {
           {/* Main Content */}
           <View style={styles.mainContent}>
             <Text style={styles.title}>
-              Please enter your mobile phone number to verify your account
+              Verify your phone number
             </Text>
             
             <Text style={styles.description}>
-              To keep Hommie Lagos safe and secure, all neighbors need to verify their account.
+              We'll send a verification code to your phone to keep Hommie safe and secure.
             </Text>
 
             {/* Phone Input */}
             <View style={styles.phoneInputContainer}>
-              <TouchableOpacity style={styles.countryCodeSelector}>
+              <View style={styles.countryCodeContainer}>
                 <Text style={styles.countryFlag}>🇳🇬</Text>
                 <Text style={styles.countryCode}>{countryCode}</Text>
-                <Text style={styles.chevron}>▼</Text>
-              </TouchableOpacity>
+              </View>
               
               <View style={styles.phoneInputWrapper}>
                 <Text style={styles.inputLabel}>Mobile phone number</Text>
                 <TextInput
                   style={styles.phoneInput}
-                  placeholder="Enter your phone number"
+                  placeholder="e.g., 8012345678"
                   value={phoneNumber}
                   onChangeText={setPhoneNumber}
                   keyboardType="phone-pad"
                   maxLength={11}
                   placeholderTextColor={COLORS.textSecondary}
+                  autoFocus={false}
+                  clearButtonMode="while-editing"
                 />
+                
+                {/* Carrier Detection */}
+                {detectedCarrier && (
+                  <View style={styles.carrierIndicator}>
+                    <Text style={styles.carrierText}>Detected: {detectedCarrier}</Text>
+                  </View>
+                )}
+                
+                {/* Debug: Show current phone number */}
+                <View style={styles.debugContainer}>
+                  <Text style={styles.debugText}>Current: "{phoneNumber}" (Length: {phoneNumber.length})</Text>
+                </View>
               </View>
+            </View>
+
+            {/* Info Box */}
+            <View style={styles.infoBox}>
+              <Text style={styles.infoIcon}>ℹ️</Text>
+              <Text style={styles.infoText}>
+                We'll send a 6-digit code via SMS. Standard message rates may apply.
+              </Text>
             </View>
           </View>
 
@@ -77,12 +149,14 @@ export default function PhoneVerificationScreen({ navigation }: any) {
           <TouchableOpacity 
             style={[
               styles.submitButton, 
-              phoneNumber.length < 10 && styles.submitButtonDisabled
+              (phoneNumber.length < 10 || isLoading) && styles.submitButtonDisabled
             ]} 
             onPress={handleSubmit}
-            disabled={phoneNumber.length < 10}
+            disabled={phoneNumber.length < 10 || isLoading}
           >
-            <Text style={styles.submitButtonText}>Submit</Text>
+            <Text style={styles.submitButtonText}>
+              {isLoading ? 'Sending...' : 'Send Verification Code'}
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -104,8 +178,18 @@ const styles = StyleSheet.create({
     paddingTop: SPACING.md,
   },
   header: {
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: SPACING.xl,
+  },
+  backButton: {
+    padding: SPACING.sm,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: COLORS.text,
+    fontWeight: '600',
   },
   skipButton: {
     padding: SPACING.sm,
@@ -124,8 +208,6 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSizes.xxl,
     fontWeight: '700',
     color: COLORS.text,
-    lineHeight: 36,
-    fontStyle: 'italic',
     textAlign: 'center',
     marginBottom: SPACING.lg,
   },
@@ -133,19 +215,20 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSizes.md,
     color: COLORS.textSecondary,
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: TYPOGRAPHY.lineHeights.normal,
     marginBottom: SPACING.xxxl,
     paddingHorizontal: SPACING.md,
   },
   phoneInputContainer: {
     marginBottom: SPACING.xl,
   },
-  countryCodeSelector: {
+  countryCodeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: SPACING.lg,
     paddingVertical: SPACING.md,
+    width: '100%',
   },
   countryFlag: {
     fontSize: 24,
@@ -154,17 +237,14 @@ const styles = StyleSheet.create({
   countryCode: {
     fontSize: TYPOGRAPHY.fontSizes.lg,
     color: COLORS.text,
-    fontWeight: '500',
-    marginRight: SPACING.sm,
-  },
-  chevron: {
-    fontSize: TYPOGRAPHY.fontSizes.sm,
-    color: COLORS.textSecondary,
+    fontWeight: '600',
   },
   phoneInputWrapper: {
     borderBottomWidth: 2,
-    borderBottomColor: COLORS.blue,
+    borderBottomColor: COLORS.primary,
     paddingBottom: SPACING.sm,
+    alignItems: 'center',
+    minWidth: 250,
   },
   inputLabel: {
     fontSize: TYPOGRAPHY.fontSizes.sm,
@@ -174,11 +254,42 @@ const styles = StyleSheet.create({
   phoneInput: {
     fontSize: TYPOGRAPHY.fontSizes.xl,
     color: COLORS.text,
-    textAlign: 'center',
+    textAlign: 'left',
     paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.sm,
+    fontWeight: '600',
+    minWidth: 200,
+  },
+  carrierIndicator: {
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+  },
+  carrierText: {
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    color: COLORS.primary,
+    fontWeight: '500',
+  },
+  infoBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: COLORS.lightGreen,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    marginBottom: SPACING.lg,
+  },
+  infoIcon: {
+    fontSize: 16,
+    marginRight: SPACING.sm,
+    marginTop: 2,
+  },
+  infoText: {
+    flex: 1,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    color: COLORS.textSecondary,
+    lineHeight: TYPOGRAPHY.lineHeights.normal,
   },
   submitButton: {
-    backgroundColor: '#E8F5E8',
+    backgroundColor: COLORS.primary,
     paddingVertical: SPACING.md,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
@@ -189,8 +300,20 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGray,
   },
   submitButtonText: {
-    color: COLORS.text,
-    fontSize: TYPOGRAPHY.fontSizes.md,
+    color: COLORS.white,
+    fontSize: TYPOGRAPHY.fontSizes.lg,
     fontWeight: '600',
+  },
+  debugContainer: {
+    alignItems: 'center',
+    marginTop: SPACING.sm,
+    padding: SPACING.sm,
+    backgroundColor: COLORS.offWhite,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  debugText: {
+    fontSize: TYPOGRAPHY.fontSizes.xs,
+    color: COLORS.textSecondary,
+    fontFamily: 'monospace',
   },
 });
