@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 // Import screens (we'll create these next)
@@ -90,21 +89,28 @@ const TabBarIcon = ({ name, color, size }: { name: string; color: string; size: 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
+  // Create a callback function that can be passed to screens
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
   return (
-    <SafeAreaProvider>
-      <PaperProvider>
-        <NavigationContainer>
-          <StatusBar style="auto" />
-          {isAuthenticated ? (
-            <TabNavigator />
-          ) : (
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Register" component={RegisterScreen} />
-            </Stack.Navigator>
-          )}
-        </NavigationContainer>
-      </PaperProvider>
-    </SafeAreaProvider>
+    <PaperProvider>
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        {isAuthenticated ? (
+          <TabNavigator />
+        ) : (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen 
+              name="Login" 
+              component={LoginScreen}
+              initialParams={{ onLoginSuccess: handleLoginSuccess }}
+            />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
+    </PaperProvider>
   );
 }

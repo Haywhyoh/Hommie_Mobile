@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
 
-export default function LoginScreen({ navigation }: any) {
+export default function LoginScreen({ navigation, route }: any) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
+  
+  // Get the onLoginSuccess callback from route params
+  const onLoginSuccess = route.params?.onLoginSuccess;
 
   const handleSendOtp = () => {
     if (phoneNumber.length >= 10) {
@@ -19,6 +21,10 @@ export default function LoginScreen({ navigation }: any) {
     if (otp.length === 6) {
       // TODO: Implement OTP verification logic
       console.log('OTP verified');
+      // Call the login success callback to switch to TabNavigator (Home screen)
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
     }
   };
 
