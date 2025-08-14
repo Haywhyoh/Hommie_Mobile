@@ -7,34 +7,54 @@ export const APP_CONFIG = {
   website: 'https://hommie.ng',
 };
 
-// Colors
+// Colors - Following Nigerian Style Guide
 export const COLORS = {
-  primary: '#007AFF',
+  // Primary Colors
+  primary: '#00A651', // Nigeria's green, main brand color
+  deepGreen: '#007A3D', // For pressed states, emphasis
+  lightGreen: '#E8F5E8', // Backgrounds, subtle highlights
+  mintGreen: '#B8E6B8', // Success states, positive feedback
+  
+  // Neutral Colors
+  white: '#FFFFFF', // Main background, cards
+  offWhite: '#FAFAFA', // Secondary backgrounds
+  lightGray: '#F5F5F5', // Dividers, disabled states
+  mediumGray: '#8E8E8E', // Secondary text, placeholders
+  darkGray: '#2C2C2C', // Primary text, headings
+  black: '#000000', // High contrast text
+  
+  // Accent Colors
+  orange: '#FF6B35', // Notifications, warnings, calls-to-action
+  blue: '#0066CC', // Links, information, trust indicators
+  red: '#E74C3C', // Errors, urgent notifications
+  yellow: '#FFC107', // Alerts, pending states
+  
+  // Legacy colors for backward compatibility
   secondary: '#5856D6',
-  success: '#34C759',
-  warning: '#FF9500',
-  error: '#FF3B30',
-  info: '#5AC8FA',
+  success: '#00A651',
+  warning: '#FF6B35',
+  error: '#E74C3C',
+  info: '#0066CC',
   
   // Background colors
-  background: '#F5F5F5',
+  background: '#FAFAFA',
   surface: '#FFFFFF',
   card: '#FFFFFF',
   
   // Text colors
-  text: '#333333',
-  textSecondary: '#666666',
-  textTertiary: '#999999',
+  text: '#2C2C2C',
+  textSecondary: '#8E8E8E',
+  textTertiary: '#8E8E8E',
   textInverse: '#FFFFFF',
   
   // Border colors
-  border: '#E5E5E5',
+  border: '#F5F5F5',
   borderLight: '#F0F0F0',
   
   // Status colors
-  online: '#34C759',
-  offline: '#999999',
-  busy: '#FF9500',
+  online: '#00A651',
+  offline: '#8E8E8E',
+  busy: '#FF6B35',
 };
 
 // Typography

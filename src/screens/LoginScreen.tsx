@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
 
 export default function LoginScreen({ navigation }: any) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -37,14 +38,20 @@ export default function LoginScreen({ navigation }: any) {
             {!showOtp ? (
               <>
                 <Text style={styles.label}>Phone Number</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your phone number"
-                  value={phoneNumber}
-                  onChangeText={setPhoneNumber}
-                  keyboardType="phone-pad"
-                  maxLength={11}
-                />
+                <View style={styles.phoneInputContainer}>
+                  <TouchableOpacity style={styles.countryCodeSelector}>
+                    <Text style={styles.countryCodeText}>🇳🇬 +234</Text>
+                    <Text style={styles.chevron}>▼</Text>
+                  </TouchableOpacity>
+                  <TextInput
+                    style={styles.phoneInput}
+                    placeholder="Enter your phone number"
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                    keyboardType="phone-pad"
+                    maxLength={10}
+                  />
+                </View>
                 <TouchableOpacity style={styles.button} onPress={handleSendOtp}>
                   <Text style={styles.buttonText}>Send OTP</Text>
                 </TouchableOpacity>
@@ -88,7 +95,7 @@ export default function LoginScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: COLORS.background,
   },
   keyboardView: {
     flex: 1,
@@ -96,65 +103,106 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: SPACING.md,
   },
   header: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: SPACING.xl,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 10,
+    fontSize: TYPOGRAPHY.fontSizes.xxxl,
+    fontWeight: '700',
+    color: COLORS.primary,
+    marginBottom: SPACING.sm,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: TYPOGRAPHY.fontSizes.md,
+    color: COLORS.textSecondary,
     textAlign: 'center',
   },
   form: {
-    marginBottom: 30,
+    marginBottom: SPACING.xl,
   },
   label: {
-    fontSize: 16,
+    fontSize: TYPOGRAPHY.fontSizes.md,
     fontWeight: '600',
-    color: '#333',
-    marginBottom: 8,
+    color: COLORS.text,
+    marginBottom: SPACING.sm,
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 15,
-    fontSize: 16,
-    marginBottom: 20,
+    borderColor: COLORS.border,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.md,
+    fontSize: TYPOGRAPHY.fontSizes.md,
+    marginBottom: SPACING.lg,
+    color: COLORS.text,
+  },
+  phoneInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.lg,
+  },
+  countryCodeSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.offWhite,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: BORDER_RADIUS.md,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.md,
+    marginRight: SPACING.sm,
+    minWidth: 100,
+  },
+  countryCodeText: {
+    fontSize: TYPOGRAPHY.fontSizes.md,
+    color: COLORS.text,
+    marginRight: SPACING.xs,
+  },
+  chevron: {
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    color: COLORS.textSecondary,
+  },
+  phoneInput: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.md,
+    fontSize: TYPOGRAPHY.fontSizes.md,
+    color: COLORS.text,
   },
   button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 8,
+    backgroundColor: COLORS.primary,
+    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: SPACING.md,
+    ...SHADOWS.small,
   },
   buttonText: {
-    color: 'white',
-    fontSize: 16,
+    color: COLORS.white,
+    fontSize: TYPOGRAPHY.fontSizes.md,
     fontWeight: '600',
   },
   resendButton: {
     alignItems: 'center',
   },
   resendText: {
-    color: '#007AFF',
-    fontSize: 14,
+    color: COLORS.primary,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    fontWeight: '500',
   },
   registerButton: {
     alignItems: 'center',
   },
   registerText: {
-    color: '#007AFF',
-    fontSize: 14,
+    color: COLORS.primary,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    fontWeight: '500',
   },
 });

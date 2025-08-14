@@ -80,6 +80,8 @@ export interface Comment {
 
 // Navigation Types
 export type RootStackParamList = {
+  Welcome: undefined;
+  Onboarding: undefined;
   Login: undefined;
   Register: undefined;
   MainTabs: undefined;
