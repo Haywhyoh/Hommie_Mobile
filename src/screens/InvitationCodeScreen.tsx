@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, SafeAreaView, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, SafeAreaView, StatusBar, ScrollView } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
+import { DEMO_INVITATION_CODES, DEMO_ZIP_CODES } from '../constants/demoData';
 
-export default function LoginScreen({ navigation, route }: any) {
+export default function InvitationCodeScreen({ navigation }: any) {
   const [country, setCountry] = useState('Nigeria');
   const [zipCode, setZipCode] = useState('');
   const [invitationCode, setInvitationCode] = useState('');
   
-  // Get the onLoginSuccess callback from route params
-  const onLoginSuccess = route.params?.onLoginSuccess;
-
   const handleContinue = () => {
     if (zipCode && invitationCode) {
       // TODO: Implement invitation code verification logic
       console.log('Verifying invitation code:', { country, zipCode, invitationCode });
-      // Call the login success callback to switch to TabNavigator (Home screen)
-      if (onLoginSuccess) {
-        onLoginSuccess();
-      }
+      // Navigate to next step or complete verification
+      navigation.navigate('AddressConfirmation');
     }
   };
 
   const handleSignIn = () => {
     // TODO: Navigate to sign in flow
     console.log('Navigate to sign in');
+  };
+
+  const handleDemoData = () => {
+    // Fill with demo data for testing
+    setZipCode(DEMO_ZIP_CODES[0]);
+    setInvitationCode(DEMO_INVITATION_CODES[0]);
   };
 
   return (
@@ -33,7 +35,7 @@ export default function LoginScreen({ navigation, route }: any) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
-        <View style={styles.content}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
           {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity 
@@ -82,6 +84,11 @@ export default function LoginScreen({ navigation, route }: any) {
             </View>
           </View>
 
+          {/* Demo Data Button */}
+          <TouchableOpacity style={styles.demoButton} onPress={handleDemoData}>
+            <Text style={styles.demoButtonText}>Fill with Demo Data</Text>
+          </TouchableOpacity>
+
           {/* Continue Button */}
           <TouchableOpacity 
             style={[styles.continueButton, (!zipCode || !invitationCode) && styles.continueButtonDisabled]} 
@@ -97,7 +104,7 @@ export default function LoginScreen({ navigation, route }: any) {
               Have a verification postcard? <Text style={styles.signInHighlight}>Sign in</Text> to enter your verification code.
             </Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -111,10 +118,14 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
   },
-  content: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
     paddingHorizontal: SPACING.lg,
     paddingTop: SPACING.md,
+    paddingBottom: SPACING.xl,
   },
   header: {
     marginBottom: SPACING.xxxl,
@@ -134,7 +145,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   form: {
-    marginBottom: SPACING.xxxl,
+    marginBottom: SPACING.xl,
   },
   countrySelector: {
     flexDirection: 'row',
@@ -176,6 +187,21 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.md,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
+  },
+  demoButton: {
+    backgroundColor: COLORS.lightGreen,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    alignItems: 'center',
+    marginBottom: SPACING.lg,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+  },
+  demoButtonText: {
+    color: COLORS.primary,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    fontWeight: '500',
   },
   continueButton: {
     backgroundColor: '#E8F5E8',

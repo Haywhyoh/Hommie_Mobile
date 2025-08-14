@@ -5,7 +5,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { Provider as PaperProvider } from 'react-native-paper';
 
-// Import screens (we'll create these next)
+// Import screens
+import WelcomeScreen from './src/screens/WelcomeScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import LocationSelectionScreen from './src/screens/LocationSelectionScreen';
+import InvitationCodeScreen from './src/screens/InvitationCodeScreen';
+import LocationAccessScreen from './src/screens/LocationAccessScreen';
+import PhoneVerificationScreen from './src/screens/PhoneVerificationScreen';
+import OTPVerificationScreen from './src/screens/OTPVerificationScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import FeedScreen from './src/screens/FeedScreen';
 import EventsScreen from './src/screens/EventsScreen';
@@ -89,8 +96,12 @@ const TabBarIcon = ({ name, color, size }: { name: string; color: string; size: 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
-  // Create a callback function that can be passed to screens
   const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  // Function to handle social login success
+  const handleSocialLoginSuccess = () => {
     setIsAuthenticated(true);
   };
 
@@ -101,13 +112,51 @@ export default function App() {
         {isAuthenticated ? (
           <TabNavigator />
         ) : (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
+            <Stack.Screen 
+              name="Welcome" 
+              component={WelcomeScreen}
+              initialParams={{ onSocialLoginSuccess: handleSocialLoginSuccess }}
+            />
+            <Stack.Screen 
+              name="Onboarding" 
+              component={OnboardingScreen}
+            />
+            <Stack.Screen 
+              name="LocationSelection" 
+              component={LocationSelectionScreen}
+            />
+            <Stack.Screen 
+              name="InvitationCode" 
+              component={InvitationCodeScreen}
+            />
+            <Stack.Screen 
+              name="LocationAccess" 
+              component={LocationAccessScreen}
+            />
+            <Stack.Screen 
+              name="PhoneVerification" 
+              component={PhoneVerificationScreen}
+            />
+            <Stack.Screen 
+              name="OTPVerification" 
+              component={OTPVerificationScreen}
+            />
+            <Stack.Screen 
+              name="AddressConfirmation" 
+              component={RegisterScreen}
+            />
             <Stack.Screen 
               name="Login" 
               component={LoginScreen}
               initialParams={{ onLoginSuccess: handleLoginSuccess }}
             />
             <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen 
+              name="Home" 
+              component={TabNavigator}
+              initialParams={{ onLoginSuccess: handleSocialLoginSuccess }}
+            />
           </Stack.Navigator>
         )}
       </NavigationContainer>
