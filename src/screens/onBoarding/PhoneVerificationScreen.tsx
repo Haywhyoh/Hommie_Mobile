@@ -153,8 +153,10 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
               onPress={handleSubmit}
               disabled={phoneNumber.length < 10 || isLoading}
             >
-              <Text style={styles.submitButtonText}>
-                {isLoading ? 'Sending...' : 'Send Verification Code'}
+              <Text style={[styles.submitButtonText,
+                (phoneNumber.length < 10 || isLoading) && styles.submitButtonDisabled
+              ]}>
+                {isLoading ? 'Sending...' : 'Send Code'}
               </Text>
             </TouchableOpacity>
           </View>
@@ -300,13 +302,16 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.lg, // Increased padding for better touch target
+    paddingVertical: SPACING.lg, 
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
-    ...SHADOWS.medium,
+    ...SHADOWS.small,
+    marginBottom: SPACING.xxl,
   },
   submitButtonDisabled: {
     backgroundColor: COLORS.lightGray,
+    color: COLORS.textSecondary,
+   
   },
   submitButtonText: {
     color: COLORS.white,
