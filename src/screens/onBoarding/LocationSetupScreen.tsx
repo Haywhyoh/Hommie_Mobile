@@ -127,8 +127,10 @@ export default function LocationSetupScreen({ navigation, route }: any) {
           >
             <Text style={styles.backButtonText}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.title}>Set your location</Text>
+          
         </View>
+
+        <Text style={styles.title}>Set your location</Text>
 
         {/* Main Content */}
         <View style={[styles.mainContent, {
@@ -258,7 +260,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: TYPOGRAPHY.lineHeights.normal,
     marginBottom: SPACING.xl,
-    paddingHorizontal: SPACING.md,
+    // paddingHorizontal: SPACING.md,
+    marginTop: 100,
   },
   optionsContainer: {
     marginBottom: SPACING.xl,

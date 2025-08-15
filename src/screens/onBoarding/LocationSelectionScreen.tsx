@@ -32,8 +32,10 @@ export default function LocationSelectionScreen({ navigation }: any) {
           >
             <Text style={styles.backButtonText}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.title}>Select your location</Text>
+        
         </View>
+
+        <Text style={styles.title}>Select your location</Text>
 
         {/* Search Bar */}
         <View style={styles.searchContainer}>
@@ -131,6 +133,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SPACING.lg,
     paddingTop: SPACING.md,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     marginBottom: SPACING.xl,
@@ -147,6 +151,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLORS.text,
     lineHeight: 32,
+    marginTop: 100,
   },
   searchContainer: {
     marginBottom: SPACING.xl,

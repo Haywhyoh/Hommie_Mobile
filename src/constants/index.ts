@@ -78,9 +78,9 @@ export const TYPOGRAPHY = {
     heavy: '800',
   },
   lineHeights: {
-    tight: 1.2,
-    normal: 1.4,
-    relaxed: 1.6,
+    tight: 20,
+    normal: 24,
+    relaxed: 32,
   },
 };
 
