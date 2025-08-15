@@ -6,12 +6,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 // Import improved screens
-import WelcomeScreen from './src/screens/onBoarding/WelcomeScreen';
-import WelcomeLanguageScreen from './src/screens/onBoarding/WelcomeLanguageScreen';
+import WelcomeScreen from './src/screens/WelcomeScreen';
 import WelcomeHeroScreen from './src/screens/onBoarding/WelcomeHeroScreen';
-import PhoneVerificationScreen from './src/screens/onBoarding/PhoneVerificationScreen';
+import ImprovedWelcomeScreen from './src/screens/ImprovedWelcomeScreen';
+import ImprovedPhoneVerificationScreen from './src/screens/ImprovedPhoneVerificationScreen';
 import OTPVerificationScreen from './src/screens/onBoarding/OTPVerificationScreen';
-import ConsentBasicsScreen from './src/screens/onBoarding/ConsentBasicsScreen';
 import LocationSetupScreen from './src/screens/onBoarding/LocationSetupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import FeedScreen from './src/screens/FeedScreen';
@@ -19,12 +18,13 @@ import EventsScreen from './src/screens/EventsScreen';
 import MarketplaceScreen from './src/screens/MarketplaceScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import LoginScreen from './src/screens/onBoarding/LoginScreen';
-import RegisterScreen from './src/screens/onBoarding/RegisterScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
-import OnboardingScreen from './src/screens/onBoarding/OnboardingScreen';
-import LocationSelectionScreen from './src/screens/onBoarding/LocationSelectionScreen';
-import InvitationCodeScreen from './src/screens/onBoarding/InvitationCodeScreen';
-import LocationAccessScreen from './src/screens/onBoarding/LocationAccessScreen';
+// Legacy screens (keeping for backward compatibility)
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import LocationSelectionScreen from './src/screens/LocationSelectionScreen';
+import InvitationCodeScreen from './src/screens/InvitationCodeScreen';
+import LocationAccessScreen from './src/screens/LocationAccessScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -122,45 +122,44 @@ export default function App() {
         {isAuthenticated ? (
           <TabNavigator />
         ) : (
-          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
-            {/* STREAMLINED ONBOARDING FLOW */}
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="WelcomeHero">
+            {/* IMPROVED ONBOARDING FLOW */}
             
-            {/* Welcome with SSO options - User registers first */}
-            <Stack.Screen 
-              name="Welcome" 
-              component={WelcomeScreen}
-              initialParams={{ onSocialLoginSuccess: handleLoginSuccess }}
-            />
-            
-            {/* Legacy Hero Welcome Screen */}
+            {/* Hero Welcome Screen - Shows community benefits first */}
             <Stack.Screen 
               name="WelcomeHero" 
               component={WelcomeHeroScreen}
             />
             
-            {/* Phone Verification - Nigerian carriers, clean UI */}
+            {/* Improved Multi-Step Welcome with Language Selection */}
+            <Stack.Screen 
+              name="WelcomeLanguage" 
+              component={ImprovedWelcomeScreen}
+            />
+            
+            {/* Improved Phone Verification - Better UX, no debug elements */}
             <Stack.Screen 
               name="PhoneVerification" 
-              component={PhoneVerificationScreen}
+              component={ImprovedPhoneVerificationScreen}
             />
-       
+            
             {/* OTP Verification with fallback options */}
             <Stack.Screen 
               name="OTPVerification" 
               component={OTPVerificationScreen}
             />
             
-            {/* Consent & Basics - Data consent, name, photo, communications */}
-            <Stack.Screen 
-              name="ConsentBasics" 
-              component={ConsentBasicsScreen}
-            />
-            
             {/* Location Setup with multiple options */}
             <Stack.Screen 
               name="LocationSetup" 
               component={LocationSetupScreen}
-              initialParams={{ onSetupComplete: handleLoginSuccess }}
+            />
+            
+            {/* Existing User Flow */}
+            <Stack.Screen 
+              name="Welcome" 
+              component={WelcomeScreen}
+              initialParams={{ onSocialLoginSuccess: handleSocialLoginSuccess }}
             />
             
             {/* Legacy Onboarding Screens (keeping for backward compatibility) */}

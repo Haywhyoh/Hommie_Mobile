@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, Image } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 const LANGUAGES = [
   { code: 'en', name: 'English', nativeName: 'English' },
@@ -11,15 +11,9 @@ const LANGUAGES = [
 
 export default function WelcomeLanguageScreen({ navigation }: any) {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [showLanguageSelection, setShowLanguageSelection] = useState(false);
 
   const handleGetStarted = () => {
-    // Show language selection after user clicks Get Started
-    setShowLanguageSelection(true);
-  };
-
-  const handleLanguageContinue = () => {
-    // Save language preference and navigate to phone verification for new users
+    // Navigate directly to phone verification with selected language
     navigation.navigate('PhoneVerification', { language: selectedLanguage });
   };
 
@@ -28,73 +22,10 @@ export default function WelcomeLanguageScreen({ navigation }: any) {
     navigation.navigate('Welcome');
   };
 
-  const handleBackToWelcome = () => {
-    // Go back to welcome content
-    setShowLanguageSelection(false);
-  };
-
-  if (showLanguageSelection) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
-        
-        <View style={styles.content}>
-          {/* Header */}
-          <View style={styles.header}>
-            <TouchableOpacity 
-              style={styles.backButton}
-              onPress={handleBackToWelcome}
-            >
-              <Text style={styles.backButtonText}>←</Text>
-            </TouchableOpacity>
-            <Text style={styles.title}>Choose your language</Text>
-          </View>
-
-          {/* Language Selection */}
-          <View style={styles.languageSection}>
-            <Text style={styles.languageSubtitle}>
-              You can change this later in settings
-            </Text>
-            
-            <View style={styles.languageOptions}>
-              {LANGUAGES.map((language) => (
-                <TouchableOpacity
-                  key={language.code}
-                  style={[
-                    styles.languageOption,
-                    selectedLanguage === language.code && styles.languageOptionSelected
-                  ]}
-                  onPress={() => setSelectedLanguage(language.code)}
-                >
-                  <View style={styles.languageInfo}>
-                    <Text style={styles.languageName}>{language.name}</Text>
-                    <Text style={styles.languageNative}>{language.nativeName}</Text>
-                  </View>
-                  {selectedLanguage === language.code && (
-                    <View style={styles.selectedIndicator}>
-                      <Text style={styles.checkmark}>✓</Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Action Button */}
-          <View style={styles.actions}>
-            <TouchableOpacity style={styles.primaryButton} onPress={handleLanguageContinue}>
-              <Text style={styles.primaryButtonText}>Continue</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  // Welcome Content (shown first)
+  // Single screen with minimal information
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
+      <StatusBar hidden={true} />
       
       <View style={styles.content}>
         {/* Header */}
@@ -106,30 +37,34 @@ export default function WelcomeLanguageScreen({ navigation }: any) {
           </Text>
         </View>
 
-        {/* Features Preview */}
-        <View style={styles.featuresSection}>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🏠</Text>
-            <Text style={styles.featureTitle}>Connect with Neighbors</Text>
-            <Text style={styles.featureDescription}>
-              Build meaningful relationships with people in your neighborhood
-            </Text>
-          </View>
+        {/* Language Selection */}
+        <View style={styles.languageSection}>
+          <Text style={styles.languageTitle}>Choose your language</Text>
+          <Text style={styles.languageSubtitle}>
+            You can change this later in settings
+          </Text>
           
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>📢</Text>
-            <Text style={styles.featureTitle}>Stay Informed</Text>
-            <Text style={styles.featureDescription}>
-              Get updates about local events, safety alerts, and community news
-            </Text>
-          </View>
-          
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🤝</Text>
-            <Text style={styles.featureTitle}>Help Each Other</Text>
-            <Text style={styles.featureDescription}>
-              Share recommendations, offer help, and support your community
-            </Text>
+          <View style={styles.languageOptions}>
+            {LANGUAGES.map((language) => (
+              <TouchableOpacity
+                key={language.code}
+                style={[
+                  styles.languageOption,
+                  selectedLanguage === language.code && styles.languageOptionSelected
+                ]}
+                onPress={() => setSelectedLanguage(language.code)}
+              >
+                <View style={styles.languageInfo}>
+                  <Text style={styles.languageName}>{language.name}</Text>
+                  <Text style={styles.languageNative}>{language.nativeName}</Text>
+                </View>
+                {selectedLanguage === language.code && (
+                  <View style={styles.selectedIndicator}>
+                    <Text style={styles.checkmark}>✓</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
 
@@ -187,41 +122,12 @@ const styles = StyleSheet.create({
     lineHeight: TYPOGRAPHY.lineHeights.normal,
     paddingHorizontal: SPACING.md,
   },
-  featuresSection: {
-    flex: 1,
-    justifyContent: 'center',
-    marginBottom: SPACING.xl,
-  },
-  feature: {
-    alignItems: 'center',
-    marginBottom: SPACING.xxl,
-    paddingHorizontal: SPACING.lg,
-  },
-  featureIcon: {
-    fontSize: 48,
-    marginBottom: SPACING.md,
-  },
-  featureTitle: {
+  languageTitle: {
     fontSize: TYPOGRAPHY.fontSizes.xl,
     fontWeight: '600',
     color: COLORS.text,
+    textAlign: 'center',
     marginBottom: SPACING.sm,
-    textAlign: 'center',
-  },
-  featureDescription: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
-    color: COLORS.textSecondary,
-    textAlign: 'center',
-    lineHeight: TYPOGRAPHY.lineHeights.normal,
-  },
-  backButton: {
-    padding: SPACING.sm,
-    marginBottom: SPACING.md,
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: COLORS.text,
-    fontWeight: '600',
   },
   languageSection: {
     flex: 1,

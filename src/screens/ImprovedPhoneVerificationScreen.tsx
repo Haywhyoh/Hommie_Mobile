@@ -3,26 +3,46 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Stat
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
 
 const NIGERIAN_CARRIERS = [
-  { name: 'MTN', codes: ['080', '081', '090', '070', '091', '0816', '0813', '0814', '0810', '0811', '0812', '0703', '0706', '0704', '0705', '0708', '0709', '0903', '0906', '0904', '0905', '0908', '0909'] },
-  { name: 'Airtel', codes: ['0802', '0808', '0708', '0812', '0701', '0902', '0901', '0809', '0811', '0708', '0810', '0907', '0908', '0909', '0901', '0902', '0903', '0904', '0905', '0906', '0907', '0908', '0909'] },
-  { name: 'Glo', codes: ['0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905', '0805', '0807', '0811', '0815', '0705', '0905'] },
-  { name: '9mobile', codes: ['0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818', '0908', '0909', '0817', '0818', '0809', '0817', '0818'] },
+  { 
+    name: 'MTN', 
+    codes: ['0803', '0806', '0813', '0814', '0816', '0810', '0703', '0706', '0903', '0906'],
+    color: '#FFCC00',
+    ussd: '*123#'
+  },
+  { 
+    name: 'Airtel', 
+    codes: ['0802', '0808', '0812', '0701', '0902', '0901', '0904', '0907'],
+    color: '#ED1C24',
+    ussd: '*121#'
+  },
+  { 
+    name: 'Glo', 
+    codes: ['0805', '0807', '0811', '0815', '0705', '0905'],
+    color: '#00A651',
+    ussd: '*777#'
+  },
+  { 
+    name: '9mobile', 
+    codes: ['0809', '0817', '0818', '0908', '0909'],
+    color: '#00AC4E',
+    ussd: '*200#'
+  },
 ];
 
-export default function PhoneVerificationScreen({ navigation, route }: any) {
+export default function ImprovedPhoneVerificationScreen({ navigation, route }: any) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+234');
-  const [detectedCarrier, setDetectedCarrier] = useState<string | null>(null);
+  const [detectedCarrier, setDetectedCarrier] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const language = route.params?.language || 'en';
 
   // Detect carrier based on phone number prefix
   useEffect(() => {
-    if (phoneNumber.length >= 3) {
-      const prefix = phoneNumber.substring(0, 3);
+    if (phoneNumber.length >= 4) {
+      const prefix = phoneNumber.substring(0, 4);
       const carrier = NIGERIAN_CARRIERS.find(c => c.codes.includes(prefix));
-      setDetectedCarrier(carrier ? carrier.name : null);
+      setDetectedCarrier(carrier || null);
     } else {
       setDetectedCarrier(null);
     }
@@ -30,7 +50,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
 
   const handleSubmit = async () => {
     if (phoneNumber.length < 10) {
-      Alert.alert('Invalid Number', 'Please enter a valid Nigerian phone number');
+      Alert.alert('Invalid Number', 'Please enter a valid Nigerian phone number (10-11 digits)');
       return;
     }
 
@@ -38,14 +58,15 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
     
     try {
       // TODO: Implement actual phone verification logic
-      console.log('Phone verification submitted:', { countryCode, phoneNumber, carrier: detectedCarrier });
+      console.log('Phone verification submitted:', { countryCode, phoneNumber, carrier: detectedCarrier?.name });
       
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       navigation.navigate('OTPVerification', { 
         phoneNumber: `${countryCode}${phoneNumber}`,
-        carrier: detectedCarrier,
+        carrier: detectedCarrier?.name || 'Unknown',
+        carrierUssd: detectedCarrier?.ussd || '*123#',
         language 
       });
     } catch (error) {
@@ -58,12 +79,22 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
   const handleSkip = () => {
     Alert.alert(
       'Skip Phone Verification?',
-      'Phone verification helps keep our community safe. You can still proceed, but some features may be limited.',
+      'Phone verification helps keep our community safe and connects you with verified neighbors. You can still proceed, but some features may be limited.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Skip', onPress: () => navigation.navigate('LocationSetup', { language }) }
+        { text: 'Skip for Now', onPress: () => navigation.navigate('LocationSetup', { language, phoneVerified: false }) }
       ]
     );
+  };
+
+  const formatPhoneNumber = (text: string) => {
+    // Remove all non-digits
+    const cleaned = text.replace(/\D/g, '');
+    
+    // Limit to 11 digits
+    const limited = cleaned.slice(0, 11);
+    
+    return limited;
   };
 
   return (
@@ -75,6 +106,17 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
         style={styles.keyboardView}
       >
         <View style={styles.content}>
+          {/* Progress indicator */}
+          <View style={styles.progressContainer}>
+            <View style={styles.progressDots}>
+              <View style={[styles.progressDot, styles.progressDotActive]} />
+              <View style={[styles.progressDot, styles.progressDotActive]} />
+              <View style={[styles.progressDot, styles.progressDotActive]} />
+              <View style={[styles.progressDot, styles.progressDotActive]} />
+            </View>
+            <Text style={styles.progressText}>Step 4 of 4</Text>
+          </View>
+
           {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity 
@@ -94,15 +136,15 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
           {/* Main Content */}
           <View style={styles.mainContent}>
             <Text style={styles.title}>
-              Verify your phone number
+              Keep your community safe
             </Text>
             
             <Text style={styles.description}>
-              We'll send a verification code to your phone to keep Hommie safe and secure.
+              Phone verification helps us connect you with verified neighbors and keeps fake accounts out of your community.
             </Text>
 
-            {/* Phone Input */}
-            <View style={styles.phoneInputContainer}>
+            {/* Phone Input Card */}
+            <View style={styles.phoneCard}>
               <View style={styles.countryCodeContainer}>
                 <Text style={styles.countryFlag}>🇳🇬</Text>
                 <Text style={styles.countryCode}>{countryCode}</Text>
@@ -114,25 +156,37 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
                   style={styles.phoneInput}
                   placeholder="e.g., 8012345678"
                   value={phoneNumber}
-                  onChangeText={setPhoneNumber}
+                  onChangeText={(text) => setPhoneNumber(formatPhoneNumber(text))}
                   keyboardType="phone-pad"
                   maxLength={11}
                   placeholderTextColor={COLORS.textSecondary}
-                  autoFocus={false}
+                  autoFocus={true}
                   clearButtonMode="while-editing"
                 />
                 
                 {/* Carrier Detection */}
                 {detectedCarrier && (
                   <View style={styles.carrierIndicator}>
-                    <Text style={styles.carrierText}>Detected: {detectedCarrier}</Text>
+                    <View style={[styles.carrierDot, { backgroundColor: detectedCarrier.color }]} />
+                    <Text style={styles.carrierText}>{detectedCarrier.name} detected</Text>
                   </View>
                 )}
-                
-                {/* Debug: Show current phone number */}
-                <View style={styles.debugContainer}>
-                  <Text style={styles.debugText}>Current: "{phoneNumber}" (Length: {phoneNumber.length})</Text>
-                </View>
+              </View>
+            </View>
+
+            {/* Benefits */}
+            <View style={styles.benefitsContainer}>
+              <View style={styles.benefitItem}>
+                <Text style={styles.benefitIcon}>🛡️</Text>
+                <Text style={styles.benefitText}>Verified neighbors only</Text>
+              </View>
+              <View style={styles.benefitItem}>
+                <Text style={styles.benefitIcon}>🚨</Text>
+                <Text style={styles.benefitText}>Emergency contact system</Text>
+              </View>
+              <View style={styles.benefitItem}>
+                <Text style={styles.benefitIcon}>📱</Text>
+                <Text style={styles.benefitText}>Quick community alerts</Text>
               </View>
             </View>
 
@@ -140,7 +194,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
             <View style={styles.infoBox}>
               <Text style={styles.infoIcon}>ℹ️</Text>
               <Text style={styles.infoText}>
-                We'll send a 6-digit code via SMS. Standard message rates may apply.
+                We'll send a 6-digit code via SMS. Standard message rates may apply. Your number stays private.
               </Text>
             </View>
           </View>
@@ -155,7 +209,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
             disabled={phoneNumber.length < 10 || isLoading}
           >
             <Text style={styles.submitButtonText}>
-              {isLoading ? 'Sending...' : 'Send Verification Code'}
+              {isLoading ? 'Sending Code...' : 'Send Verification Code'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -176,6 +230,28 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SPACING.lg,
     paddingTop: SPACING.md,
+  },
+  progressContainer: {
+    alignItems: 'center',
+    marginBottom: SPACING.lg,
+  },
+  progressDots: {
+    flexDirection: 'row',
+    marginBottom: SPACING.sm,
+  },
+  progressDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.lightGray,
+    marginHorizontal: SPACING.xs,
+  },
+  progressDotActive: {
+    backgroundColor: COLORS.primary,
+  },
+  progressText: {
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    color: COLORS.textSecondary,
   },
   header: {
     flexDirection: 'row',
@@ -201,15 +277,15 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     flex: 1,
-    justifyContent: 'center',
-    marginBottom: SPACING.xxxl,
+    paddingTop: SPACING.lg,
   },
   title: {
     fontSize: TYPOGRAPHY.fontSizes.xxl,
     fontWeight: '700',
     color: COLORS.text,
     textAlign: 'center',
-    marginBottom: SPACING.lg,
+    marginBottom: SPACING.md,
+    lineHeight: TYPOGRAPHY.lineHeights.tight,
   },
   description: {
     fontSize: TYPOGRAPHY.fontSizes.md,
@@ -217,18 +293,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: TYPOGRAPHY.lineHeights.normal,
     marginBottom: SPACING.xxxl,
-    paddingHorizontal: SPACING.md,
+    paddingHorizontal: SPACING.sm,
   },
-  phoneInputContainer: {
+  phoneCard: {
+    backgroundColor: COLORS.white,
+    borderRadius: BORDER_RADIUS.xl,
+    padding: SPACING.xl,
     marginBottom: SPACING.xl,
+    borderWidth: 2,
+    borderColor: COLORS.border,
+    ...SHADOWS.medium,
   },
   countryCodeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: SPACING.lg,
-    paddingVertical: SPACING.md,
-    width: '100%',
+    paddingBottom: SPACING.md,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
   },
   countryFlag: {
     fontSize: 24,
@@ -240,46 +323,75 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   phoneInputWrapper: {
-    borderBottomWidth: 2,
-    borderBottomColor: COLORS.primary,
-    paddingBottom: SPACING.sm,
     alignItems: 'center',
-    minWidth: 250,
   },
   inputLabel: {
     fontSize: TYPOGRAPHY.fontSizes.sm,
     color: COLORS.textSecondary,
     marginBottom: SPACING.sm,
+    textAlign: 'center',
   },
   phoneInput: {
     fontSize: TYPOGRAPHY.fontSizes.xl,
     color: COLORS.text,
-    textAlign: 'left',
+    textAlign: 'center',
     paddingVertical: SPACING.md,
-    paddingHorizontal: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
     fontWeight: '600',
-    minWidth: 200,
+    width: '100%',
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.primary,
   },
   carrierIndicator: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: SPACING.sm,
+    marginTop: SPACING.md,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    backgroundColor: COLORS.lightGreen,
+    borderRadius: BORDER_RADIUS.md,
+  },
+  carrierDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: SPACING.sm,
   },
   carrierText: {
     fontSize: TYPOGRAPHY.fontSizes.sm,
     color: COLORS.primary,
     fontWeight: '500',
   },
+  benefitsContainer: {
+    marginBottom: SPACING.xl,
+  },
+  benefitItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+    paddingVertical: SPACING.sm,
+  },
+  benefitIcon: {
+    fontSize: 20,
+    marginRight: SPACING.md,
+  },
+  benefitText: {
+    fontSize: TYPOGRAPHY.fontSizes.md,
+    color: COLORS.text,
+    flex: 1,
+  },
   infoBox: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     backgroundColor: COLORS.lightGreen,
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
-    marginBottom: SPACING.lg,
+    padding: SPACING.lg,
+    borderRadius: BORDER_RADIUS.lg,
+    marginBottom: SPACING.xl,
+    ...SHADOWS.small,
   },
   infoIcon: {
     fontSize: 16,
-    marginRight: SPACING.sm,
+    marginRight: SPACING.md,
     marginTop: 2,
   },
   infoText: {
@@ -290,7 +402,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.md,
+    paddingVertical: SPACING.lg,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
     marginBottom: SPACING.xl,
@@ -303,17 +415,5 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: TYPOGRAPHY.fontSizes.lg,
     fontWeight: '600',
-  },
-  debugContainer: {
-    alignItems: 'center',
-    marginTop: SPACING.sm,
-    padding: SPACING.sm,
-    backgroundColor: COLORS.offWhite,
-    borderRadius: BORDER_RADIUS.sm,
-  },
-  debugText: {
-    fontSize: TYPOGRAPHY.fontSizes.xs,
-    color: COLORS.textSecondary,
-    fontFamily: 'monospace',
   },
 });

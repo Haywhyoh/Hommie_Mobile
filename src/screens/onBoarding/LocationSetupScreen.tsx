@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, ScrollView, Alert } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 const LOCATION_OPTIONS = [
   {
@@ -46,6 +46,10 @@ export default function LocationSetupScreen({ navigation, route }: any) {
   const [selectedLandmark, setSelectedLandmark] = useState<any>(null);
 
   const language = route.params?.language || 'en';
+  const phoneNumber = route.params?.phoneNumber || '';
+  const firstName = route.params?.firstName || '';
+  const communications = route.params?.communications || {};
+  const onSetupComplete = route.params?.onSetupComplete;
 
   const handleOptionSelect = (optionId: string) => {
     setSelectedOption(optionId);
@@ -67,8 +71,8 @@ export default function LocationSetupScreen({ navigation, route }: any) {
         { text: 'Cancel', style: 'cancel' },
         { text: 'Allow', onPress: () => {
           // TODO: Implement GPS location access
-          Alert.alert('Location Detected', 'Your location has been detected. Proceeding to home screen.');
-          navigation.navigate('Home');
+          Alert.alert('Location Detected', 'Your location has been detected. Welcome to Hommie!');
+          if (onSetupComplete) onSetupComplete();
         }}
       ]
     );
@@ -87,8 +91,8 @@ export default function LocationSetupScreen({ navigation, route }: any) {
   const handleContinue = () => {
     if (selectedOption === 'landmark' && selectedLandmark) {
       // TODO: Save landmark selection and proceed
-      Alert.alert('Location Set', `You've selected ${selectedLandmark.name}. Proceeding to home screen.`);
-      navigation.navigate('Home');
+      Alert.alert('Location Set', `You've selected ${selectedLandmark.name}. Welcome to Hommie!`);
+      if (onSetupComplete) onSetupComplete();
     } else if (selectedOption === 'gps') {
       // GPS already handled
     } else if (selectedOption === 'map') {
@@ -104,7 +108,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
         { text: 'Cancel', style: 'cancel' },
         { text: 'Continue', onPress: () => {
           // TODO: Navigate to manual address input
-          navigation.navigate('Home');
+          if (onSetupComplete) onSetupComplete();
         }}
       ]
     );
@@ -112,7 +116,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
+      <StatusBar hidden={true} />
       
       <View style={styles.content}>
         {/* Header */}
@@ -127,8 +131,12 @@ export default function LocationSetupScreen({ navigation, route }: any) {
         </View>
 
         {/* Main Content */}
-        <ScrollView style={styles.mainContent} showsVerticalScrollIndicator={false}>
-          <Text style={styles.description}>
+        <View style={[styles.mainContent, {
+        
+        }]} >
+          <Text style={[styles.description, {
+            marginTop: SPACING.xxl,
+          }]}>
             Help us connect you with your neighborhood by setting your location
           </Text>
 
@@ -206,7 +214,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
               </Text>
             </TouchableOpacity>
           )}
-        </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -241,6 +249,8 @@ const styles = StyleSheet.create({
   },
   mainContent: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   description: {
     fontSize: TYPOGRAPHY.fontSizes.md,

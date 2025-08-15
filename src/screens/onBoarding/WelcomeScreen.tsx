@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { SafeAreaView } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,33 +26,25 @@ export default function WelcomeScreen({ navigation, route }: any) {
 
   const handleGoogleSignIn = () => {
     console.log('Google sign-in pressed');
-    // Navigate directly to home for demo purposes
-    if (onSocialLoginSuccess) {
-      onSocialLoginSuccess();
-    }
-    navigation.navigate('Home');
+    // After successful SSO registration, go to phone verification
+    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'google' });
   };
 
   const handleAppleSignIn = () => {
     console.log('Apple sign-in pressed');
-    // Navigate directly to home for demo purposes
-    if (onSocialLoginSuccess) {
-      onSocialLoginSuccess();
-    }
-    navigation.navigate('Home');
+    // After successful SSO registration, go to phone verification
+    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'apple' });
   };
 
   const handleFacebookSignIn = () => {
     console.log('Facebook sign-in pressed');
-    // Navigate directly to home for demo purposes
-    if (onSocialLoginSuccess) {
-      onSocialLoginSuccess();
-    }
-    navigation.navigate('Home');
+    // After successful SSO registration, go to phone verification
+    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'facebook' });
   };
 
   const handleEmailSignIn = () => {
-    navigation.navigate('Login');
+    // For email, go to phone verification after registration
+    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'email' });
   };
 
   const handleInviteCode = () => {
@@ -64,7 +56,7 @@ export default function WelcomeScreen({ navigation, route }: any) {
       <StatusBar barStyle="light-content" />
       
       <Image 
-        source={require('../../assets/bg.jpg')} 
+        source={require('../../../assets/bg.jpg')} 
         style={styles.backgroundImage}
         resizeMode="cover"
       />

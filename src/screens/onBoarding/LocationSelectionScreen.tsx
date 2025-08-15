@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, ScrollView } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
-import { DEMO_LOCATIONS } from '../constants/demoData';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { DEMO_LOCATIONS } from '../../constants/demoData';
 
 export default function LocationSelectionScreen({ navigation }: any) {
   const [searchQuery, setSearchQuery] = useState('Nigeria');

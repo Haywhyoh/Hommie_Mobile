@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 export default function OTPVerificationScreen({ navigation, route }: any) {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -68,9 +68,8 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
         
-        Alert.alert('Success', 'Phone number verified successfully!', [
-          { text: 'Continue', onPress: () => navigation.navigate('LocationSetup', { language }) }
-        ]);
+        // Show success feedback and navigate
+        navigation.navigate('LocationSetup', { language, phoneNumber });
       } catch (error) {
         Alert.alert('Error', 'Failed to verify OTP. Please try again.');
       } finally {
@@ -114,7 +113,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
         { text: 'Cancel', style: 'cancel' },
         { text: 'I\'ve Done This', onPress: () => {
           // TODO: Check USSD verification status
-          navigation.navigate('LocationSetup', { language });
+          navigation.navigate('LocationSetup', { language, phoneNumber });
         }}
       ]
     );
@@ -128,7 +127,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
+      <StatusBar hidden={true} />
       
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -143,7 +142,6 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
             >
               <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>
-            <Text style={styles.title}>Verify your phone number</Text>
           </View>
 
           {/* Main Content */}
@@ -215,14 +213,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
                 <Text style={styles.fallbackArrow}>→</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.fallbackOption} onPress={handleUSSD}>
-                <Text style={styles.fallbackIcon}>🔢</Text>
-                <View style={styles.fallbackInfo}>
-                  <Text style={styles.fallbackText}>Use USSD code</Text>
-                  <Text style={styles.fallbackSubtext}>Dial *123*1# on your {carrier} line</Text>
-                </View>
-                <Text style={styles.fallbackArrow}>→</Text>
-              </TouchableOpacity>
+           
             </View>
           </View>
 
@@ -249,6 +240,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   keyboardView: {
     flex: 1,
@@ -279,7 +272,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: SPACING.xxxl,
+    marginBottom: SPACING.lg,
   },
   description: {
     fontSize: TYPOGRAPHY.fontSizes.md,
@@ -301,10 +294,11 @@ const styles = StyleSheet.create({
   },
   otpContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '100%',
     maxWidth: 300,
     marginBottom: SPACING.xl,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   otpInput: {
     width: 50,

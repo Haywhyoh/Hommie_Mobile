@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, SafeAreaView, StatusBar, ScrollView } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../constants';
-import { DEMO_INVITATION_CODES, DEMO_ZIP_CODES } from '../constants/demoData';
+import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { DEMO_INVITATION_CODES, DEMO_ZIP_CODES } from '../../constants/demoData';
 
 export default function InvitationCodeScreen({ navigation }: any) {
   const [country, setCountry] = useState('Nigeria');
