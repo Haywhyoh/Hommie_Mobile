@@ -129,7 +129,7 @@ export default function EmailVerificationScreen({ navigation, route }: any) {
 
             {/* Code Input Section */}
             <View style={styles.codeSection}>
-              <Text style={styles.inputLabel}>Verification Code</Text>
+              {/* <Text style={styles.inputLabel}>Verification Code</Text> */}
               <View style={styles.otpContainer}>
                 {verificationCode.map((digit, index) => (
                   <TextInput
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   resendText: {
     fontSize: TYPOGRAPHY.fontSizes.md,
     color: COLORS.primary,
-    fontWeight: '600',
+    fontWeight: '400',
   },
   timerText: {
     fontSize: TYPOGRAPHY.fontSizes.md,
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   verifyButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.lg,
+    paddingVertical: SPACING.md,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
     marginBottom: SPACING.md,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   },
   verifyButtonText: {
     color: COLORS.white,
-    fontSize: TYPOGRAPHY.fontSizes.lg,
+    fontSize: TYPOGRAPHY.fontSizes.md,
     fontWeight: '600',
   },
   verifyButtonTextDisabled: {

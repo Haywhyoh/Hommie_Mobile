@@ -5,9 +5,9 @@ import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../const
 const LOCATION_OPTIONS = [
   {
     id: 'gps',
-    title: 'Use GPS',
-    subtitle: 'Automatically detect your location',
-    description: 'Recommended for most accurate results',
+    title: 'Auto-detect',
+    subtitle: 'Use my current location',
+    description: 'Most accurate and fastest',
     icon: '📍',
     color: COLORS.primary,
     recommended: true,
@@ -15,17 +15,17 @@ const LOCATION_OPTIONS = [
   {
     id: 'map',
     title: 'Pick on Map',
-    subtitle: 'Drag pin to your exact location',
-    description: 'Choose your precise location on the map',
+    subtitle: 'Choose exact spot',
+    description: 'Pin your precise location',
     icon: '🗺️',
     color: COLORS.blue,
     recommended: false,
   },
   {
     id: 'landmark',
-    title: 'Choose Landmark',
-    subtitle: 'No exact address? Pick a nearby landmark',
-    description: 'Search schools, churches, markets, major roads',
+    title: 'Nearby Landmark',
+    subtitle: 'Find me by a landmark',
+    description: 'School, church, or market',
     icon: '🏛️',
     color: COLORS.orange,
     recommended: false,
@@ -130,18 +130,17 @@ export default function LocationSetupScreen({ navigation, route }: any) {
           
         </View>
 
-        <Text style={styles.title}>Set your location</Text>
+        <View style={styles.heroSection}>
+          <Text style={styles.title}>Where are you?</Text>
+          <Text style={styles.subtitle}>Help us connect you with your neighbors</Text>
+        </View>
+
 
         {/* Main Content */}
         <View style={[styles.mainContent, {
         
         }]} >
-          <Text style={[styles.description, {
-            marginTop: SPACING.xxl,
-          }]}>
-            Help us connect you with your neighborhood by setting your location
-          </Text>
-
+          
           {/* Location Options */}
           <View style={styles.optionsContainer}>
             {LOCATION_OPTIONS.map((option) => (
@@ -153,19 +152,23 @@ export default function LocationSetupScreen({ navigation, route }: any) {
                 ]}
                 onPress={() => handleOptionSelect(option.id)}
               >
-                <View style={styles.optionHeader}>
-                  <Text style={styles.optionIcon}>{option.icon}</Text>
-                  <View style={styles.optionInfo}>
-                    <Text style={styles.optionTitle}>{option.title}</Text>
-                    <Text style={styles.optionSubtitle}>{option.subtitle}</Text>
+                <View style={styles.optionContent}>
+                  <View style={styles.optionIconContainer}>
+                    <Text style={styles.optionIcon}>{option.icon}</Text>
                   </View>
-                  {option.recommended && (
-                    <View style={styles.recommendedBadge}>
-                      <Text style={styles.recommendedText}>Recommended</Text>
+                  <View style={styles.optionInfo}>
+                    <View style={styles.optionHeader}>
+                      <Text style={styles.optionTitle}>{option.title}</Text>
+                      {option.recommended && (
+                        <View style={styles.recommendedBadge}>
+                          <Text style={styles.recommendedText}>✓</Text>
+                        </View>
+                      )}
                     </View>
-                  )}
+                    <Text style={styles.optionSubtitle}>{option.subtitle}</Text>
+                    <Text style={styles.optionDescription}>{option.description}</Text>
+                  </View>
                 </View>
-                <Text style={styles.optionDescription}>{option.description}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -173,10 +176,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
           {/* Landmarks List */}
           {showLandmarks && (
             <View style={styles.landmarksSection}>
-              <Text style={styles.landmarksTitle}>Nearby Landmarks</Text>
-              <Text style={styles.landmarksSubtitle}>
-                Select a landmark near your location
-              </Text>
+              <Text style={styles.landmarksTitle}>Choose a landmark</Text>
               
               {SAMPLE_LANDMARKS.map((landmark) => (
                 <TouchableOpacity
@@ -196,7 +196,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
               ))}
 
               <TouchableOpacity style={styles.manualAddressButton} onPress={handleManualAddress}>
-                <Text style={styles.manualAddressText}>Can't find your location? Enter manually</Text>
+                <Text style={styles.manualAddressText}>Enter address manually</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -211,9 +211,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
               onPress={handleContinue}
               disabled={selectedOption === 'landmark' && !selectedLandmark}
             >
-              <Text style={styles.continueButtonText}>
-                {selectedOption === 'landmark' ? 'Continue with Landmark' : 'Continue'}
-              </Text>
+              <Text style={styles.continueButtonText}>Continue</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -243,25 +241,25 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     fontWeight: '600',
   },
+  heroSection: {
+    marginTop: SPACING.lg,
+    marginBottom: SPACING.xl,
+    alignItems: 'center',
+  },
   title: {
     fontSize: TYPOGRAPHY.fontSizes.xxl,
     fontWeight: '700',
     color: COLORS.text,
-    lineHeight: 32,
+    textAlign: 'center',
+    marginBottom: SPACING.sm,
+  },
+  subtitle: {
+    fontSize: TYPOGRAPHY.fontSizes.lg,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
   },
   mainContent: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  description: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
-    color: COLORS.textSecondary,
-    textAlign: 'center',
-    lineHeight: TYPOGRAPHY.lineHeights.normal,
-    marginBottom: SPACING.xl,
-    // paddingHorizontal: SPACING.md,
-    marginTop: 100,
   },
   optionsContainer: {
     marginBottom: SPACING.xl,
@@ -269,7 +267,7 @@ const styles = StyleSheet.create({
   optionCard: {
     backgroundColor: COLORS.white,
     padding: SPACING.lg,
-    borderRadius: BORDER_RADIUS.lg,
+    borderRadius: BORDER_RADIUS.xl,
     marginBottom: SPACING.md,
     borderWidth: 2,
     borderColor: COLORS.border,
@@ -279,33 +277,47 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     backgroundColor: COLORS.lightGreen,
   },
-  optionHeader: {
+  optionContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SPACING.sm,
+  },
+  optionIconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: COLORS.lightGreen,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: SPACING.md,
   },
   optionIcon: {
-    fontSize: 32,
-    marginRight: SPACING.md,
+    fontSize: 24,
   },
   optionInfo: {
     flex: 1,
+  },
+  optionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: SPACING.xs,
   },
   optionTitle: {
     fontSize: TYPOGRAPHY.fontSizes.lg,
     fontWeight: '600',
     color: COLORS.text,
-    marginBottom: SPACING.xs,
   },
   optionSubtitle: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
     color: COLORS.textSecondary,
   },
   recommendedBadge: {
     backgroundColor: COLORS.primary,
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: SPACING.xs,
-    borderRadius: BORDER_RADIUS.sm,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   recommendedText: {
     color: COLORS.white,
@@ -313,9 +325,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   optionDescription: {
-    fontSize: TYPOGRAPHY.fontSizes.sm,
+    fontSize: TYPOGRAPHY.fontSizes.xs,
     color: COLORS.textSecondary,
-    lineHeight: TYPOGRAPHY.lineHeights.normal,
+    marginTop: SPACING.xs,
   },
   landmarksSection: {
     marginBottom: SPACING.xl,
@@ -325,11 +337,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: COLORS.text,
     marginBottom: SPACING.sm,
-  },
-  landmarksSubtitle: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
-    color: COLORS.textSecondary,
-    marginBottom: SPACING.md,
   },
   landmarkItem: {
     flexDirection: 'row',

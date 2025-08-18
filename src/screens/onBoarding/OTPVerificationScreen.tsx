@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   
   verifyButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.md,
+    paddingVertical: SPACING.sm,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
     marginBottom: SPACING.xl,
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
   },
   verifyButtonText: {
     color: COLORS.white,
-    fontSize: TYPOGRAPHY.fontSizes.lg,
+    fontSize: TYPOGRAPHY.fontSizes.md,
     fontWeight: '600',
   },
 });
