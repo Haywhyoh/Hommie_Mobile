@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { Provider as PaperProvider } from 'react-native-paper';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 // Import improved screens
 import WelcomeScreen from './src/screens/onBoarding/WelcomeScreen';
@@ -52,7 +53,7 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
       />
@@ -60,9 +61,9 @@ function TabNavigator() {
         name="Feed" 
         component={FeedScreen}
         options={{
-          tabBarLabel: 'Feed',
+          tabBarLabel: 'Community',
           tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="newspaper" color={color} size={size} />
+            <MaterialCommunityIcons name="account-group" color={color} size={size} />
           ),
         }}
       />
@@ -72,7 +73,7 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Events',
           tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="calendar" color={color} size={size} />
+            <MaterialCommunityIcons name="calendar-multiple" color={color} size={size} />
           ),
         }}
       />
@@ -82,7 +83,7 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Market',
           tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="store" color={color} size={size} />
+            <MaterialCommunityIcons name="shopping" color={color} size={size} />
           ),
         }}
       />
@@ -92,7 +93,7 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <TabBarIcon name="person" color={color} size={size} />
+            <MaterialCommunityIcons name="account-circle" color={color} size={size} />
           ),
         }}
       />
@@ -100,11 +101,6 @@ function TabNavigator() {
   );
 }
 
-// Placeholder TabBarIcon component
-const TabBarIcon = ({ name, color, size }: { name: string; color: string; size: number }) => {
-  // We'll implement proper icons later
-  return null;
-};
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
