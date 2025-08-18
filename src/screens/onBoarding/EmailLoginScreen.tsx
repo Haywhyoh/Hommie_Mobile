@@ -12,6 +12,7 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 export default function EmailLoginScreen({ navigation, route }: any) {
@@ -111,17 +112,20 @@ export default function EmailLoginScreen({ navigation, route }: any) {
             <View style={styles.inputSection}>
               <View style={styles.inputContainer}>
                 <Text style={styles.inputLabel}>Email Address</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholderTextColor={COLORS.textSecondary}
-                  autoFocus
-                />
+                <View style={styles.inputWrapper}>
+                  <Icon name="email" size={20} color={COLORS.textSecondary} style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholderTextColor={COLORS.textSecondary}
+                    autoFocus
+                  />
+                </View>
               </View>
             </View>
 
@@ -135,19 +139,16 @@ export default function EmailLoginScreen({ navigation, route }: any) {
 
               <View style={styles.socialButtons}>
                 <TouchableOpacity style={styles.socialButton} onPress={handleGoogleLogin}>
-                  <Text style={styles.socialIcon}>🔍</Text>
+                  <Icon name="google" size={20} color="#DB4437" style={styles.socialIcon} />
                   <Text style={styles.socialButtonText}>Google</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.socialButton} onPress={handleAppleLogin}>
-                  <Text style={styles.socialIcon}>🍎</Text>
+                  <Icon name="apple" size={20} color="#000000" style={styles.socialIcon} />
                   <Text style={styles.socialButtonText}>Apple</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity style={styles.socialButton} onPress={handleFacebookLogin}>
-                  <Text style={styles.socialIcon}>📘</Text>
-                  <Text style={styles.socialButtonText}>Facebook</Text>
-                </TouchableOpacity>
+              
               </View>
             </View>
           </View>
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
     paddingTop: SPACING.xl,
   },
   titleContainer: {
-    marginBottom: SPACING.xxxl,
+    marginBottom: SPACING.xxl,
     alignItems: 'center',
   },
   title: {
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLORS.text,
     textAlign: 'center',
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   subtitle: {
     fontSize: TYPOGRAPHY.fontSizes.md,
@@ -241,26 +242,35 @@ const styles = StyleSheet.create({
     lineHeight: TYPOGRAPHY.lineHeights.relaxed,
   },
   inputSection: {
-    marginBottom: SPACING.xl,
-  },
-  inputContainer: {
     marginBottom: SPACING.lg,
   },
+  inputContainer: {
+    marginBottom: SPACING.md,
+  },
   inputLabel: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
     color: COLORS.text,
     fontWeight: '500',
     marginBottom: SPACING.sm,
   },
-  input: {
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: COLORS.lightGray,
     borderRadius: BORDER_RADIUS.md,
-    paddingVertical: SPACING.lg,
-    paddingHorizontal: SPACING.lg,
-    fontSize: TYPOGRAPHY.fontSizes.md,
-    color: COLORS.text,
     borderWidth: 1,
     borderColor: 'transparent',
+  },
+  inputIcon: {
+    marginLeft: SPACING.md,
+    marginRight: SPACING.sm,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.sm,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
+    color: COLORS.text,
   },
   socialSection: {
     marginBottom: SPACING.xl,
@@ -296,7 +306,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   socialIcon: {
-    fontSize: 18,
     marginRight: SPACING.sm,
   },
   socialButtonText: {
@@ -305,12 +314,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   buttonContainer: {
-    paddingBottom: SPACING.xl,
-    paddingTop: SPACING.md,
+    paddingBottom: SPACING.sm,
+    paddingTop: SPACING.sm,
   },
   loginButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.lg,
+    paddingVertical: SPACING.md,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
     marginBottom: SPACING.lg,
@@ -321,7 +330,7 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: COLORS.white,
-    fontSize: TYPOGRAPHY.fontSizes.lg,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
     fontWeight: '600',
   },
   loginButtonTextDisabled: {

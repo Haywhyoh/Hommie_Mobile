@@ -123,11 +123,7 @@ export default function WelcomeScreen({ navigation, route }: any) {
               <Text style={styles.socialButtonText}>Continue with Apple</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.socialButton} onPress={handleFacebookSignIn}>
-              <Text style={styles.socialIcon}>📘</Text>
-              <Text style={styles.socialButtonText}>Continue with Facebook</Text>
-            </TouchableOpacity>
-            
+          
             <TouchableOpacity style={styles.socialButton} onPress={handleEmailSignUp}>
               <Text style={styles.socialIcon}>✉️</Text>
               <Text style={styles.socialButtonText}>Continue with Email</Text>
