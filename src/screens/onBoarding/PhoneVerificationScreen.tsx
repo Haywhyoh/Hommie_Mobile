@@ -17,6 +17,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
   const [isLoading, setIsLoading] = useState(false);
 
   const language = route.params?.language || 'en';
+  const isSignup = route.params?.isSignup || false;
 
 
   // Detect carrier based on phone number prefix
@@ -48,7 +49,8 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
       navigation.navigate('OTPVerification', { 
         phoneNumber: `${countryCode}${phoneNumber}`,
         carrier: detectedCarrier,
-        language 
+        language,
+        isSignup
       });
     } catch (error) {
       Alert.alert('Error', 'Failed to send verification code. Please try again.');
@@ -63,7 +65,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
       'Phone verification helps keep our community safe. You can still proceed, but some features may be limited.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Skip', onPress: () => navigation.navigate('LocationSetup', { language, phoneNumber: '' }) }
+        { text: 'Skip', onPress: () => navigation.navigate('LocationSetup', { language, phoneNumber: '', isSignup }) }
       ]
     );
   };

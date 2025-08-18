@@ -2,13 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
-export default function OnboardingScreen({ navigation }: any) {
+export default function OnboardingScreen({ navigation, route }: any) {
   const handleGetStarted = () => {
     navigation.navigate('LocationSelection');
   };
 
   const handleSignIn = () => {
-    navigation.navigate('Login');
+    const onSocialLoginSuccess = route.params?.onSocialLoginSuccess;
+    const onLoginSuccess = route.params?.onLoginSuccess;
+    navigation.navigate('Login', { onLoginSuccess, onSocialLoginSuccess });
   };
 
   return (

@@ -11,6 +11,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
   const phoneNumber = route.params?.phoneNumber || '08012345678';
   const carrier = route.params?.carrier || 'Unknown';
   const language = route.params?.language || 'en';
+  const isSignup = route.params?.isSignup || false;
 
   // Create refs for OTP input fields
   const otpRefs = useRef<Array<TextInput | null>>([]);
@@ -69,7 +70,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
         await new Promise(resolve => setTimeout(resolve, 1500));
         
         // Show success feedback and navigate
-        navigation.navigate('LocationSetup', { language, phoneNumber });
+        navigation.navigate('LocationSetup', { language, phoneNumber, isSignup });
       } catch (error) {
         Alert.alert('Error', 'Failed to verify OTP. Please try again.');
       } finally {
@@ -113,7 +114,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
         { text: 'Cancel', style: 'cancel' },
         { text: 'I\'ve Done This', onPress: () => {
           // TODO: Check USSD verification status
-          navigation.navigate('LocationSetup', { language, phoneNumber });
+          navigation.navigate('LocationSetup', { language, phoneNumber, isSignup });
         }}
       ]
     );

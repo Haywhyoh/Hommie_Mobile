@@ -7,12 +7,15 @@ import { Provider as PaperProvider } from 'react-native-paper';
 
 // Import improved screens
 import WelcomeScreen from './src/screens/onBoarding/WelcomeScreen';
-import WelcomeLanguageScreen from './src/screens/onBoarding/WelcomeLanguageScreen';
+
 import WelcomeHeroScreen from './src/screens/onBoarding/WelcomeHeroScreen';
 import PhoneVerificationScreen from './src/screens/onBoarding/PhoneVerificationScreen';
 import OTPVerificationScreen from './src/screens/onBoarding/OTPVerificationScreen';
 import ConsentBasicsScreen from './src/screens/onBoarding/ConsentBasicsScreen';
 import LocationSetupScreen from './src/screens/onBoarding/LocationSetupScreen';
+import EmailRegistrationScreen from './src/screens/onBoarding/EmailRegistrationScreen';
+import EmailVerificationScreen from './src/screens/onBoarding/EmailVerificationScreen';
+import EmailLoginScreen from './src/screens/onBoarding/EmailLoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import FeedScreen from './src/screens/FeedScreen';
 import EventsScreen from './src/screens/EventsScreen';
@@ -122,23 +125,38 @@ export default function App() {
         {isAuthenticated ? (
           <TabNavigator />
         ) : (
-          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
-            {/* STREAMLINED ONBOARDING FLOW */}
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="WelcomeHero">
+            {/* NEW ONBOARDING FLOW */}
             
-            {/* Welcome with SSO options - User registers first */}
-            <Stack.Screen 
-              name="Welcome" 
-              component={WelcomeScreen}
-              initialParams={{ onSocialLoginSuccess: handleLoginSuccess }}
-            />
-            
-            {/* Legacy Hero Welcome Screen */}
+            {/* Welcome Screen - First screen with Join/Login options */}
             <Stack.Screen 
               name="WelcomeHero" 
               component={WelcomeHeroScreen}
+             
             />
             
-            {/* Phone Verification - Nigerian carriers, clean UI */}
+            {/* Email Registration Flow - For new users choosing email */}
+            <Stack.Screen 
+              name="EmailRegistration" 
+              component={EmailRegistrationScreen}
+            />
+            
+            {/* Email Verification - For both signup and login */}
+            <Stack.Screen 
+              name="EmailVerification" 
+              component={EmailVerificationScreen}
+            />
+            
+            {/* Email Login - For existing users */}
+            <Stack.Screen 
+              name="EmailLogin" 
+              component={EmailLoginScreen}
+              initialParams={{ onLoginSuccess: handleLoginSuccess, onSocialLoginSuccess: handleSocialLoginSuccess }}
+            />
+            
+
+            
+            {/* Phone Verification - After email verification or SSO signup */}
             <Stack.Screen 
               name="PhoneVerification" 
               component={PhoneVerificationScreen}
@@ -150,12 +168,6 @@ export default function App() {
               component={OTPVerificationScreen}
             />
             
-            {/* Consent & Basics - Data consent, name, photo, communications */}
-            <Stack.Screen 
-              name="ConsentBasics" 
-              component={ConsentBasicsScreen}
-            />
-            
             {/* Location Setup with multiple options */}
             <Stack.Screen 
               name="LocationSetup" 
@@ -163,10 +175,15 @@ export default function App() {
               initialParams={{ onSetupComplete: handleLoginSuccess }}
             />
             
-            {/* Legacy Onboarding Screens (keeping for backward compatibility) */}
+            <Stack.Screen 
+              name="Welcome" 
+              component={WelcomeScreen}
+              initialParams={{ onLoginSuccess: handleLoginSuccess, onSocialLoginSuccess: handleSocialLoginSuccess }}
+            />
             <Stack.Screen 
               name="Onboarding" 
               component={OnboardingScreen}
+              initialParams={{ onLoginSuccess: handleLoginSuccess, onSocialLoginSuccess: handleSocialLoginSuccess }}
             />
             <Stack.Screen 
               name="LocationSelection" 
@@ -180,21 +197,17 @@ export default function App() {
               name="LocationAccess" 
               component={LocationAccessScreen}
             />
+            <Stack.Screen 
+              name="ConsentBasics" 
+              component={ConsentBasicsScreen}
+            />
             
-            {/* Authentication Screens */}
             <Stack.Screen 
               name="Login" 
               component={LoginScreen}
-              initialParams={{ onLoginSuccess: handleLoginSuccess }}
+              initialParams={{ onLoginSuccess: handleLoginSuccess, onSocialLoginSuccess: handleSocialLoginSuccess }}
             />
             <Stack.Screen name="Register" component={RegisterScreen} />
-            
-            {/* Main App */}
-            <Stack.Screen 
-              name="Home" 
-              component={TabNavigator}
-              initialParams={{ onLoginSuccess: handleSocialLoginSuccess }}
-            />
           </Stack.Navigator>
         )}
       </NavigationContainer>
