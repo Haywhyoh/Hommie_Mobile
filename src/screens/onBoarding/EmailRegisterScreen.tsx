@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSizes.md,
     color: COLORS.textSecondary,
     textAlign: 'center',
-    lineHeight: TYPOGRAPHY.lineHeights.relaxed,
+    // lineHeight: TYPOGRAPHY.lineHeights.relaxed,
   },
   inputSection: {
     marginBottom: SPACING.xl,

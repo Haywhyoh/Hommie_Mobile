@@ -25,7 +25,7 @@ export default function WelcomeHeroScreen({ navigation }: any) {
   };
 
   const handleSignIn = () => {
-    navigation.navigate('Welcome');
+    navigation.navigate('Login');
   };
 
   return (

@@ -17,38 +17,11 @@ export default function LoginScreen({ navigation, route }: any) {
   const onSocialLoginSuccess = route.params?.onSocialLoginSuccess;
   const onLoginSuccess = route.params?.onLoginSuccess;
 
-  const handleJoinCommunity = () => {
-    // Navigate directly to phone verification with default language (English)
-    navigation.navigate('PhoneVerification', { language: 'en', isSignup: true });
-  };
 
-  const handleSignIn = () => {
-    navigation.navigate('Login', { onLoginSuccess, onSocialLoginSuccess });
-  };
 
-  const handleGoogleSignIn = () => {
-    console.log('Google sign-in pressed - joining');
-    // For SSO signup, get user details from provider then continue to phone verification
-    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'google', isSignup: true });
-  };
 
-  const handleAppleSignIn = () => {
-    console.log('Apple sign-in pressed - joining');
-    // For SSO signup, get user details from provider then continue to phone verification
-    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'apple', isSignup: true });
-  };
 
-  const handleFacebookSignIn = () => {
-    console.log('Facebook sign-in pressed - joining');
-    // For SSO signup, get user details from provider then continue to phone verification
-    navigation.navigate('PhoneVerification', { language: 'en', signupMethod: 'facebook', isSignup: true });
-  };
-
-  const handleEmailSignUp = () => {
-    // For email signup, go to email registration flow
-    navigation.navigate('EmailRegistration');
-  };
-
+  // Social Login handlers for existing users
   const handleGoogleLogin = () => {
     console.log('Google login pressed');
     // For SSO login, authenticate and go to home if successful
@@ -73,14 +46,12 @@ export default function LoginScreen({ navigation, route }: any) {
     }
   };
 
-  const handleEmailLogin = () => {
-    // For email login, go to email login with OTP
+  const handleEmailSignIn = () => {
+    console.log('Email login pressed');
+    // For email login, go to email login screen
     navigation.navigate('EmailLogin', { onLoginSuccess, onSocialLoginSuccess });
   };
 
-  const handleInviteCode = () => {
-    navigation.navigate('InvitationCode');
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -97,7 +68,7 @@ export default function LoginScreen({ navigation, route }: any) {
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.appName}>hommie</Text>
-          <Text style={styles.tagline}>Explore your neighborhood</Text>
+          <Text style={styles.tagline}>Welcome back to your neighborhood</Text>
         </View>
 
         <View style={styles.authOptions}>
@@ -113,32 +84,32 @@ export default function LoginScreen({ navigation, route }: any) {
           </View> */}
 
           <View style={styles.socialButtons}>
-            <TouchableOpacity style={styles.socialButton} onPress={handleGoogleSignIn}>
+            <TouchableOpacity style={styles.socialButton} onPress={handleGoogleLogin}>
               <Text style={styles.socialIcon}>🔍</Text>
-              <Text style={styles.socialButtonText}>Continue with Google</Text>
+              <Text style={styles.socialButtonText}>Sign in with Google</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.socialButton} onPress={handleAppleSignIn}>
+            <TouchableOpacity style={styles.socialButton} onPress={handleAppleLogin}>
               <Text style={styles.socialIcon}>🍎</Text>
-              <Text style={styles.socialButtonText}>Continue with Apple</Text>
+              <Text style={styles.socialButtonText}>Sign in with Apple</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.socialButton} onPress={handleFacebookSignIn}>
+            <TouchableOpacity style={styles.socialButton} onPress={handleFacebookLogin}>
               <Text style={styles.socialIcon}>📘</Text>
-              <Text style={styles.socialButtonText}>Continue with Facebook</Text>
+              <Text style={styles.socialButtonText}>Sign in with Facebook</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.socialButton} onPress={handleEmailSignUp}>
+            <TouchableOpacity style={styles.socialButton} onPress={handleEmailSignIn}>
               <Text style={styles.socialIcon}>✉️</Text>
-              <Text style={styles.socialButtonText}>Continue with Email</Text>
+              <Text style={styles.socialButtonText}>Sign in with Email</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Login Section */}
+          {/* Sign Up Section */}
           <View style={styles.loginSection}>
-            <Text style={styles.loginPrompt}>Already have an account?</Text>
-            <TouchableOpacity onPress={handleSignIn}>
-              <Text style={styles.loginLink}>Sign In</Text>
+            <Text style={styles.loginPrompt}>Don't have an account?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
+              <Text style={styles.loginLink}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
