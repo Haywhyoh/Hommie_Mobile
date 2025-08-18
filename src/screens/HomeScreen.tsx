@@ -1,31 +1,100 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Dimensions, Alert, TextInput } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen() {
+  const [searchText, setSearchText] = useState('');
+
+  // Mock user data - would come from authentication context
+  const currentUser = {
+    firstName: 'Adebayo',
+    lastName: 'Ogundimu',
+    profileImage: null, // null means we'll show initials
+    hasBusinessProfile: true,
+  };
+
+  const handleProfilePress = () => {
+    // This will navigate to the ProfileScreen
+    Alert.alert(
+      'Profile Menu',
+      'Choose profile to view',
+      [
+        {
+          text: 'Personal Profile',
+          onPress: () => Alert.alert('Navigate to ProfileScreen', 'This will open your personal profile with estates, cultural settings, and badges.')
+        },
+        ...(currentUser.hasBusinessProfile ? [{
+          text: 'Business Profile',
+          onPress: () => Alert.alert('Navigate to BusinessProfileScreen', 'This will open your business profile with services, reviews, and management tools.')
+        }] : []),
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        }
+      ]
+    );
+  };
+
+  const handleSearch = () => {
+    if (searchText.trim()) {
+      Alert.alert('Search', `Searching for: "${searchText}"`);
+    }
+  };
+
+  const handleAddNeighbor = () => {
+    Alert.alert('Add Neighbor', 'Invite neighbors to join your community');
+  };
+
+  const handleMessages = () => {
+    Alert.alert('Messages', 'Navigate to messages screen');
+  };
+
+  const getInitials = (firstName: string, lastName: string) => {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header with Search Bar */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <View style={styles.profileSection}>
-            <TouchableOpacity style={styles.profileButton}>
-              <Text style={styles.profileInitial}>A</Text>
+            <TouchableOpacity style={styles.profileButton} onPress={handleProfilePress}>
+              <Text style={styles.profileInitial}>
+                {getInitials(currentUser.firstName, currentUser.lastName)}
+              </Text>
+              {currentUser.hasBusinessProfile && (
+                <View style={styles.businessIndicator}>
+                  <MaterialCommunityIcons name="store" size={10} color="#FFFFFF" />
+                </View>
+              )}
             </TouchableOpacity>
           </View>
           
-          <TouchableOpacity style={styles.searchBar}>
+          <View style={styles.searchBar}>
             <MaterialCommunityIcons name="magnify" size={20} color="#8E8E8E" style={styles.searchIcon} />
-            <Text style={styles.searchPlaceholder}>Search Hommie</Text>
-          </TouchableOpacity>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search Hommie"
+              placeholderTextColor="#8E8E8E"
+              value={searchText}
+              onChangeText={setSearchText}
+              onSubmitEditing={handleSearch}
+            />
+            {searchText.length > 0 && (
+              <TouchableOpacity onPress={() => setSearchText('')} style={styles.clearButton}>
+                <MaterialCommunityIcons name="close-circle" size={18} color="#8E8E8E" />
+              </TouchableOpacity>
+            )}
+          </View>
           
           <View style={styles.headerActions}>
-            <TouchableOpacity style={styles.headerAction}>
+            <TouchableOpacity style={styles.headerAction} onPress={handleAddNeighbor}>
               <MaterialCommunityIcons name="account-plus" size={24} color="#2C2C2C" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.headerAction}>
+            <TouchableOpacity style={styles.headerAction} onPress={handleMessages}>
               <MaterialCommunityIcons name="chat" size={24} color="#2C2C2C" />
             </TouchableOpacity>
           </View>
@@ -251,14 +320,28 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#E74C3C',
+    backgroundColor: '#00A651',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative',
   },
   profileInitial: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
     color: '#FFFFFF',
+  },
+  businessIndicator: {
+    position: 'absolute',
+    bottom: -2,
+    right: -2,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#228B22',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
   searchBar: {
     flex: 1,
@@ -273,10 +356,13 @@ const styles = StyleSheet.create({
   searchIcon: {
     marginRight: 8,
   },
-  searchPlaceholder: {
+  searchInput: {
     fontSize: 16,
-    color: '#8E8E8E',
+    color: '#2C2C2C',
     flex: 1,
+  },
+  clearButton: {
+    padding: 2,
   },
   headerActions: {
     flexDirection: 'row',

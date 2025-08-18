@@ -18,10 +18,10 @@ import EmailRegistrationScreen from './src/screens/onBoarding/EmailRegistrationS
 import EmailVerificationScreen from './src/screens/onBoarding/EmailVerificationScreen';
 import EmailLoginScreen from './src/screens/onBoarding/EmailLoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
-import FeedScreen from './src/screens/FeedScreen';
 import EventsScreen from './src/screens/EventsScreen';
+import PostScreen from './src/screens/PostScreen';
 import MarketplaceScreen from './src/screens/MarketplaceScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
+import DiscoverScreen from './src/screens/DiscoverScreen';
 import LoginScreen from './src/screens/onBoarding/LoginScreen';
 import RegisterScreen from './src/screens/onBoarding/RegisterScreen';
 
@@ -41,8 +41,8 @@ function TabNavigator() {
         tabBarInactiveTintColor: '#8E8E8E',
         headerShown: false,
         tabBarStyle: {
-          height: 60,
-          paddingBottom: 8,
+          height: 80,
+          paddingBottom: 20,
           paddingTop: 8,
         },
       }}
@@ -58,16 +58,6 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen 
-        name="Feed" 
-        component={FeedScreen}
-        options={{
-          tabBarLabel: 'Community',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-group" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen 
         name="Events" 
         component={EventsScreen}
         options={{
@@ -78,7 +68,17 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen 
-        name="Marketplace" 
+        name="Post" 
+        component={PostScreen}
+        options={{
+          tabBarLabel: 'Post',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="plus-circle" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="Market" 
         component={MarketplaceScreen}
         options={{
           tabBarLabel: 'Market',
@@ -88,12 +88,12 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen 
-        name="Profile" 
-        component={ProfileScreen}
+        name="Discover" 
+        component={DiscoverScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Discover',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-circle" color={color} size={size} />
+            <MaterialCommunityIcons name="compass" color={color} size={size} />
           ),
         }}
       />
