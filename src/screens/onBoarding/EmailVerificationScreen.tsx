@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,10 +15,13 @@ import {
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 export default function EmailVerificationScreen({ navigation, route }: any) {
-  const [verificationCode, setVerificationCode] = useState('');
+  const [verificationCode, setVerificationCode] = useState(['', '', '', '', '', '']);
   const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
+  
+  // Create refs for OTP input fields
+  const otpRefs = useRef<Array<TextInput | null>>([]);
 
   const { email, firstName, lastName, isSignup, onLoginSuccess } = route.params || {};
 
@@ -34,7 +37,7 @@ export default function EmailVerificationScreen({ navigation, route }: any) {
   }, [timer]);
 
   const handleVerifyCode = async () => {
-    if (verificationCode.length !== 6) {
+    if (verificationCode.join('').length !== 6) {
       Alert.alert('Invalid Code', 'Please enter the 6-digit verification code');
       return;
     }
@@ -43,7 +46,7 @@ export default function EmailVerificationScreen({ navigation, route }: any) {
     
     try {
       // TODO: Implement actual verification logic
-      console.log('Email verification submitted:', { email, code: verificationCode });
+      console.log('Email verification submitted:', { email, code: verificationCode.join('') });
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -83,6 +86,7 @@ export default function EmailVerificationScreen({ navigation, route }: any) {
       
       setTimer(60);
       setCanResend(false);
+      setVerificationCode(['', '', '', '', '', '']);
       Alert.alert('Code Sent', 'A new verification code has been sent to your email');
     } catch (error) {
       Alert.alert('Error', 'Failed to resend code. Please try again.');
@@ -126,17 +130,39 @@ export default function EmailVerificationScreen({ navigation, route }: any) {
             {/* Code Input Section */}
             <View style={styles.codeSection}>
               <Text style={styles.inputLabel}>Verification Code</Text>
-              <TextInput
-                style={styles.codeInput}
-                placeholder="000000"
-                value={verificationCode}
-                onChangeText={setVerificationCode}
-                keyboardType="number-pad"
-                maxLength={6}
-                textAlign="center"
-                placeholderTextColor={COLORS.textSecondary}
-                autoFocus
-              />
+              <View style={styles.otpContainer}>
+                {verificationCode.map((digit, index) => (
+                  <TextInput
+                    key={index}
+                    ref={(ref) => {
+                      if (ref) otpRefs.current[index] = ref;
+                    }}
+                    style={[
+                      styles.otpInput,
+                      digit && styles.otpInputFilled
+                    ]}
+                    value={digit}
+                    onChangeText={(value) => {
+                      if (value.length <= 1) {
+                        const newCode = [...verificationCode];
+                        newCode[index] = value;
+                        setVerificationCode(newCode);
+                        
+                        // Auto-focus next input if a digit was entered
+                        if (value && index < 5) {
+                          otpRefs.current[index + 1]?.focus();
+                        }
+                      }
+                    }}
+                    keyboardType="numeric"
+                    maxLength={1}
+                    textAlign="center"
+                    placeholder="0"
+                    placeholderTextColor={COLORS.textSecondary}
+                    autoFocus={index === 0}
+                  />
+                ))}
+              </View>
               
               {/* Resend Code */}
               <View style={styles.resendContainer}>
@@ -158,14 +184,14 @@ export default function EmailVerificationScreen({ navigation, route }: any) {
             <TouchableOpacity 
               style={[
                 styles.verifyButton, 
-                (verificationCode.length !== 6 || isLoading) && styles.verifyButtonDisabled
+                (verificationCode.join('').length !== 6 || isLoading) && styles.verifyButtonDisabled
               ]} 
               onPress={handleVerifyCode}
-              disabled={verificationCode.length !== 6 || isLoading}
+              disabled={verificationCode.join('').length !== 6 || isLoading}
             >
               <Text style={[
                 styles.verifyButtonText,
-                (verificationCode.length !== 6 || isLoading) && styles.verifyButtonTextDisabled
+                (verificationCode.join('').length !== 6 || isLoading) && styles.verifyButtonTextDisabled
               ]}>
                 {isLoading ? 'Verifying...' : 'Verify Email'}
               </Text>
@@ -252,6 +278,31 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     fontWeight: '500',
     marginBottom: SPACING.lg,
+  },
+  otpContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    maxWidth: 300,
+    marginBottom: SPACING.xl,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  otpInput: {
+    width: 50,
+    height: 60,
+    borderWidth: 2,
+    borderColor: COLORS.border,
+    borderRadius: BORDER_RADIUS.md,
+    fontSize: TYPOGRAPHY.fontSizes.xxl,
+    fontWeight: '600',
+    color: COLORS.text,
+    textAlign: 'center',
+    backgroundColor: COLORS.white,
+    marginHorizontal: SPACING.xs,
+  },
+  otpInputFilled: {
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.lightGreen,
   },
   codeInput: {
     backgroundColor: COLORS.lightGray,

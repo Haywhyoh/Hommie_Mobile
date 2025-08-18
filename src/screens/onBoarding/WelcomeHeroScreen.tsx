@@ -105,11 +105,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLORS.text,
     textAlign: 'center',
-    marginBottom: SPACING.lg,
+    marginBottom: SPACING.md,
     lineHeight: TYPOGRAPHY.lineHeights.relaxed,
   },
   heroSubtitle: {
-    fontSize: TYPOGRAPHY.fontSizes.lg,
+    fontSize: TYPOGRAPHY.fontSizes.sm,
     color: COLORS.textSecondary,
     textAlign: 'center',
     marginBottom: SPACING.xxxl,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.lg,
+    paddingVertical: SPACING.md,
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
     marginBottom: SPACING.md,
