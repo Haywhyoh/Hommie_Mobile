@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Dimensions, Alert, TextInput } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
 export default function HomeScreen() {
   const [searchText, setSearchText] = useState('');
+  const navigation = useNavigation();
 
   // Mock user data - would come from authentication context
   const currentUser = {
@@ -23,12 +25,20 @@ export default function HomeScreen() {
       [
         {
           text: 'Personal Profile',
-          onPress: () => Alert.alert('Navigate to ProfileScreen', 'This will open your personal profile with estates, cultural settings, and badges.')
+          onPress: () => navigation.navigate('Profile' as never)
         },
         ...(currentUser.hasBusinessProfile ? [{
           text: 'Business Profile',
-          onPress: () => Alert.alert('Navigate to BusinessProfileScreen', 'This will open your business profile with services, reviews, and management tools.')
+          onPress: () => navigation.navigate('BusinessProfile' as never)
         }] : []),
+        {
+          text: 'Community Activity',
+          onPress: () => navigation.navigate('CommunityActivity' as never)
+        },
+        {
+          text: 'Local Businesses',
+          onPress: () => navigation.navigate('LocalBusinessDirectory' as never)
+        },
         {
           text: 'Cancel',
           style: 'cancel'

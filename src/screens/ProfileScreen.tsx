@@ -1,12 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ProfileScreen() {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <MaterialCommunityIcons name="arrow-left" size={24} color="#2C2C2C" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Profile</Text>
         <TouchableOpacity style={styles.settingsButton}>
           <MaterialCommunityIcons name="cog" size={24} color="#2C2C2C" />
         </TouchableOpacity>
@@ -25,7 +31,7 @@ export default function ProfileScreen() {
           </View>
           
           <Text style={styles.userName}>Adebayo Ogundimu</Text>
-          <TouchableOpacity style={styles.locationContainer}>
+          <TouchableOpacity style={styles.locationContainer} onPress={() => navigation.navigate('EstateManager' as never)}>
             <MaterialCommunityIcons name="map-marker" size={16} color="#8E8E8E" />
             <Text style={styles.userLocation}>Victoria Island, Lagos</Text>
             <Text style={styles.estateCount}>• 3 estates</Text>
@@ -90,11 +96,11 @@ export default function ProfileScreen() {
           <Text style={styles.enhancementTitle}>Better profile, better Hommie</Text>
           <Text style={styles.enhancementSubtitle}>It's true. Share your story and you'll get more replies from posts and listings.</Text>
           
-          <TouchableOpacity style={styles.bioCard}>
+          <TouchableOpacity style={styles.bioCard} onPress={() => navigation.navigate('CulturalProfile' as never)}>
             <MaterialCommunityIcons name="pencil" size={24} color="#FFC107" />
             <View style={styles.bioContent}>
-              <Text style={styles.bioTitle}>Fill out your bio</Text>
-              <Text style={styles.bioSubtitle}>Tell your neighbors about yourself</Text>
+              <Text style={styles.bioTitle}>Complete your profile</Text>
+              <Text style={styles.bioSubtitle}>Add cultural background and personal details</Text>
             </View>
             <MaterialCommunityIcons name="chevron-right" size={20} color="#8E8E8E" />
           </TouchableOpacity>
@@ -150,7 +156,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* Business Profile Option */}
-        <TouchableOpacity style={styles.businessCard}>
+        <TouchableOpacity style={styles.businessCard} onPress={() => navigation.navigate('BusinessRegistration' as never)}>
           <MaterialCommunityIcons name="plus-circle" size={20} color="#00A651" />
           <Text style={styles.businessText}>Add business page</Text>
         </TouchableOpacity>
@@ -177,7 +183,19 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  backButton: {
+    padding: 8,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#2C2C2C',
+    flex: 1,
+    textAlign: 'center',
   },
   settingsButton: {
     padding: 8,

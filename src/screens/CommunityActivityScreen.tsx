@@ -459,7 +459,7 @@ export default function CommunityActivityScreen() {
           <Text style={styles.rankProgress}>
             {nextRank.rank <= COMMUNITY_RANKS.length ? 
               `${nextRank.requirements - userStats.totalPoints} points to ${nextRank.title}` :
-              'You've reached the highest rank!'
+              'You\'ve reached the highest rank!'
             }
           </Text>
           

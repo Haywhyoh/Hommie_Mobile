@@ -22,6 +22,20 @@ import EventsScreen from './src/screens/EventsScreen';
 import PostScreen from './src/screens/PostScreen';
 import MarketplaceScreen from './src/screens/MarketplaceScreen';
 import DiscoverScreen from './src/screens/DiscoverScreen';
+
+// Profile and Community Screens
+import ProfileScreen from './src/screens/ProfileScreen';
+import BusinessProfileScreen from './src/screens/BusinessProfileScreen';
+import EstateManagerScreen from './src/screens/EstateManagerScreen';
+import CulturalProfileScreen from './src/screens/CulturalProfileScreen';
+import PhoneVerificationEnhancedScreen from './src/screens/PhoneVerificationEnhancedScreen';
+import NINVerificationScreen from './src/screens/NINVerificationScreen';
+import BadgeSystemScreen from './src/screens/BadgeSystemScreen';
+import BusinessRegistrationScreen from './src/screens/BusinessRegistrationScreen';
+import ProfessionalSkillsScreen from './src/screens/ProfessionalSkillsScreen';
+import LocalBusinessDirectoryScreen from './src/screens/LocalBusinessDirectoryScreen';
+import CommunityActivityScreen from './src/screens/CommunityActivityScreen';
+import NeighborRatingScreen from './src/screens/NeighborRatingScreen';
 import LoginScreen from './src/screens/onBoarding/LoginScreen';
 import RegisterScreen from './src/screens/onBoarding/RegisterScreen';
 
@@ -101,9 +115,35 @@ function TabNavigator() {
   );
 }
 
+function MainStackNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MainTabs" component={TabNavigator} />
+      
+      {/* Profile Screens */}
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="BusinessProfile" component={BusinessProfileScreen} />
+      <Stack.Screen name="EstateManager" component={EstateManagerScreen} />
+      <Stack.Screen name="CulturalProfile" component={CulturalProfileScreen} />
+      <Stack.Screen name="PhoneVerificationEnhanced" component={PhoneVerificationEnhancedScreen} />
+      <Stack.Screen name="NINVerification" component={NINVerificationScreen} />
+      <Stack.Screen name="BadgeSystem" component={BadgeSystemScreen} />
+      
+      {/* Business Screens */}
+      <Stack.Screen name="BusinessRegistration" component={BusinessRegistrationScreen} />
+      <Stack.Screen name="ProfessionalSkills" component={ProfessionalSkillsScreen} />
+      <Stack.Screen name="LocalBusinessDirectory" component={LocalBusinessDirectoryScreen} />
+      
+      {/* Community Screens */}
+      <Stack.Screen name="CommunityActivity" component={CommunityActivityScreen} />
+      <Stack.Screen name="NeighborRating" component={NeighborRatingScreen} />
+    </Stack.Navigator>
+  );
+}
+
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(true); // Temporarily set to true to see main app
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
@@ -119,7 +159,7 @@ export default function App() {
       <NavigationContainer>
         <StatusBar style="auto" />
         {isAuthenticated ? (
-          <TabNavigator />
+          <MainStackNavigator />
         ) : (
           <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="WelcomeHero">
             {/* NEW ONBOARDING FLOW */}
