@@ -9,6 +9,7 @@ import {
   StatusBar,
 } from 'react-native';
 import { SafeAreaView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
@@ -114,18 +115,17 @@ export default function WelcomeScreen({ navigation, route }: any) {
 
           <View style={styles.socialButtons}>
             <TouchableOpacity style={styles.socialButton} onPress={handleGoogleSignIn}>
-              <Text style={styles.socialIcon}>🔍</Text>
+              <Icon name="google" size={20} color="#DB4437" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Continue with Google</Text>
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.socialButton} onPress={handleAppleSignIn}>
-              <Text style={styles.socialIcon}>🍎</Text>
+              <Icon name="apple" size={20} color="#000000" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Continue with Apple</Text>
             </TouchableOpacity>
             
-          
             <TouchableOpacity style={styles.socialButton} onPress={handleEmailSignUp}>
-              <Text style={styles.socialIcon}>✉️</Text>
+              <Icon name="email" size={20} color="#4285F4" style={styles.socialIcon} />
               <Text style={styles.socialButtonText}>Continue with Email</Text>
             </TouchableOpacity>
           </View>
@@ -266,10 +266,8 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   socialIcon: {
-    fontSize: 20,
     marginRight: SPACING.md,
     width: 24,
-    textAlign: 'center',
   },
   socialButtonText: {
     color: COLORS.white,

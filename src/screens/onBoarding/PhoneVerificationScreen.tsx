@@ -108,9 +108,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
               </Text>
               
               <Text 
-                style={{
-                  marginBottom: SPACING.lg,
-                }}
+                style={styles.description}
               >
                  We'll send you a code to keep your account safe.
                </Text>
@@ -126,10 +124,10 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
                 </View>
                 
                 <View style={styles.phoneInputWrapper}>
-                  <Text style={styles.inputLabel}>Mobile phone number</Text>
+                  {/* <Text style={styles.inputLabel}>Mobile phone number</Text> */}
                   <TextInput
                     style={styles.phoneInput}
-                    placeholder="e.g., 8012345678"
+                    placeholder=" 8012345678"
                     value={phoneNumber}
                     onChangeText={setPhoneNumber}
                     keyboardType="phone-pad"
@@ -137,6 +135,9 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
                     placeholderTextColor={COLORS.textSecondary}
                     autoFocus={false}
                     clearButtonMode="while-editing"
+                    selectTextOnFocus={true}
+                    textContentType="telephoneNumber"
+                    autoComplete="tel"
                   />
                   
                   {/* Carrier Detection */}
@@ -177,6 +178,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   keyboardView: {
     flex: 1,
@@ -189,7 +192,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: SPACING.md,
     paddingTop: SPACING.md,
   },
   header: {
@@ -244,16 +247,16 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSizes.md,
     color: COLORS.text, // Changed from textSecondary to text for better visibility
     textAlign: 'center',
-    lineHeight: TYPOGRAPHY.lineHeights.relaxed,
+    lineHeight: TYPOGRAPHY.lineHeights.tight,
     paddingHorizontal: SPACING.md,
     maxWidth: 280,
     opacity: 0.8, // Add slight opacity for subtle secondary appearance
-    marginBottom: SPACING.xxl,
+    marginBottom: SPACING.lg,
   },
   inputSection: {
     flex: 0,
     alignItems: 'center',
-    paddingVertical: SPACING.xl,
+    paddingVertical: SPACING.lg,
   },
   phoneInputContainer: {
     alignItems: 'center',
@@ -279,8 +282,9 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.primary,
     paddingBottom: SPACING.sm,
     alignItems: 'center',
-    minWidth: 280, // Increased minimum width
-    maxWidth: 320, // Add maximum width
+    minWidth: 320, // Increased minimum width for better text display
+    maxWidth: 350, // Increased maximum width
+    paddingHorizontal: SPACING.md, // Add horizontal padding
   },
   inputLabel: {
     fontSize: TYPOGRAPHY.fontSizes.sm,
@@ -289,13 +293,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   phoneInput: {
-    fontSize: TYPOGRAPHY.fontSizes.xl,
+    fontSize: TYPOGRAPHY.fontSizes.md,
     color: COLORS.text,
     textAlign: 'center', // Center the input text
     paddingVertical: SPACING.md,
     paddingHorizontal: SPACING.lg,
-    fontWeight: '600',
+    fontWeight: '400',
     width: '100%',
+    minHeight: 50, // Ensure minimum height for proper text display
+    letterSpacing: 1, // Add letter spacing for better readability
   },
   carrierIndicator: {
     alignItems: 'center',
@@ -312,11 +318,11 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: COLORS.primary,
-    paddingVertical: SPACING.lg, 
+    paddingVertical: SPACING.md, 
     borderRadius: BORDER_RADIUS.lg,
     alignItems: 'center',
     ...SHADOWS.small,
-    marginBottom: SPACING.xxl,
+    marginBottom: SPACING.xxxl,
   },
   submitButtonDisabled: {
     backgroundColor: COLORS.lightGray,
@@ -325,7 +331,7 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: COLORS.white,
-    fontSize: TYPOGRAPHY.fontSizes.lg,
+    fontSize: TYPOGRAPHY.fontSizes.md,
     fontWeight: '600',
   },
 });

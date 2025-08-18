@@ -11,6 +11,7 @@ import {
   Platform,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 export default function EmailLoginScreen({ navigation, route }: any) {
@@ -128,17 +129,17 @@ export default function EmailLoginScreen({ navigation, route }: any) {
 
               <View style={styles.socialButtons}>
                 <TouchableOpacity style={styles.socialButton} onPress={handleGoogleLogin}>
-                  <Text style={styles.socialIcon}>🔍</Text>
+                  <Icon name="google" size={20} color="#DB4437" style={styles.socialIcon} />
                   <Text style={styles.socialButtonText}>Google</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.socialButton} onPress={handleAppleLogin}>
-                  <Text style={styles.socialIcon}>🍎</Text>
+                  <Icon name="apple" size={20} color="#000000" style={styles.socialIcon} />
                   <Text style={styles.socialButtonText}>Apple</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={styles.socialButton} onPress={handleFacebookLogin}>
-                  <Text style={styles.socialIcon}>📘</Text>
+                  <Icon name="facebook" size={20} color="#1877F2" style={styles.socialIcon} />
                   <Text style={styles.socialButtonText}>Facebook</Text>
                 </TouchableOpacity>
               </View>

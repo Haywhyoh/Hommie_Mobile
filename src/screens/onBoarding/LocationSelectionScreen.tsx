@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 import { DEMO_LOCATIONS } from '../../constants/demoData';
 
@@ -40,7 +41,7 @@ export default function LocationSelectionScreen({ navigation }: any) {
         {/* Search Bar */}
         <View style={styles.searchContainer}>
           <View style={styles.searchBar}>
-            <Text style={styles.searchIcon}>🔍</Text>
+            <Icon name="magnify" size={20} color={COLORS.textSecondary} style={styles.searchIcon} />
             <TextInput
               style={styles.searchInput}
               value={searchQuery}
@@ -53,7 +54,7 @@ export default function LocationSelectionScreen({ navigation }: any) {
                 style={styles.clearButton}
                 onPress={() => setSearchQuery('')}
               >
-                <Text style={styles.clearButtonText}>✕</Text>
+                <Icon name="close" size={20} color={COLORS.textSecondary} />
               </TouchableOpacity>
             )}
           </View>
@@ -62,7 +63,7 @@ export default function LocationSelectionScreen({ navigation }: any) {
         {/* Current Location */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionIcon}>📮</Text>
+            <Icon name="map-marker" size={20} color={COLORS.primary} style={styles.sectionIcon} />
             <Text style={styles.sectionTitle}>Current location</Text>
           </View>
           
@@ -70,12 +71,12 @@ export default function LocationSelectionScreen({ navigation }: any) {
             style={styles.currentLocationItem}
             onPress={() => handleLocationSelect(DEMO_LOCATIONS[0])}
           >
-            <Text style={styles.locationPin}>📍</Text>
+            <Icon name="map-marker-radius" size={20} color={COLORS.primary} style={styles.locationPin} />
             <View style={styles.locationInfo}>
               <Text style={styles.locationName}>{DEMO_LOCATIONS[0].name}</Text>
               <Text style={styles.locationDescription}>Detected from your device</Text>
             </View>
-            <Text style={styles.editIcon}>✏️</Text>
+            <Icon name="pencil" size={20} color={COLORS.textSecondary} style={styles.editIcon} />
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.whatsThisLink}>

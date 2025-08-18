@@ -143,12 +143,15 @@ export default function EmailLoginScreen({ navigation, route }: any) {
                   <Text style={styles.socialButtonText}>Google</Text>
                 </TouchableOpacity>
                 
-                <TouchableOpacity style={styles.socialButton} onPress={handleAppleLogin}>
+                                <TouchableOpacity style={styles.socialButton} onPress={handleAppleLogin}>
                   <Icon name="apple" size={20} color="#000000" style={styles.socialIcon} />
                   <Text style={styles.socialButtonText}>Apple</Text>
                 </TouchableOpacity>
                 
-              
+                <TouchableOpacity style={styles.socialButton} onPress={handleFacebookLogin}>
+                  <Icon name="facebook" size={20} color="#1877F2" style={styles.socialIcon} />
+                  <Text style={styles.socialButtonText}>Facebook</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

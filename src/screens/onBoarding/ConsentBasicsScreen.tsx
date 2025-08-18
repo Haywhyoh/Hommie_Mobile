@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, KeyboardAvoidingView, Platform, ScrollView, Switch } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
 
 export default function ConsentBasicsScreen({ navigation, route }: any) {
@@ -142,7 +143,10 @@ export default function ConsentBasicsScreen({ navigation, route }: any) {
               <View style={styles.communicationOptions}>
                 <View style={styles.communicationOption}>
                   <View style={styles.communicationInfo}>
-                    <Text style={styles.communicationTitle}>📱 Push notifications</Text>
+                    <View style={styles.communicationTitleRow}>
+                      <Icon name="bell" size={20} color={COLORS.primary} style={styles.communicationIcon} />
+                      <Text style={styles.communicationTitle}>Push notifications</Text>
+                    </View>
                     <Text style={styles.communicationSubtext}>Community updates and safety alerts</Text>
                   </View>
                   <Switch
@@ -155,7 +159,10 @@ export default function ConsentBasicsScreen({ navigation, route }: any) {
 
                 <View style={styles.communicationOption}>
                   <View style={styles.communicationInfo}>
-                    <Text style={styles.communicationTitle}>💬 SMS messages</Text>
+                    <View style={styles.communicationTitleRow}>
+                      <Icon name="message-text" size={20} color={COLORS.primary} style={styles.communicationIcon} />
+                      <Text style={styles.communicationTitle}>SMS messages</Text>
+                    </View>
                     <Text style={styles.communicationSubtext}>Important alerts only</Text>
                   </View>
                   <Switch
@@ -168,7 +175,10 @@ export default function ConsentBasicsScreen({ navigation, route }: any) {
 
                 <View style={styles.communicationOption}>
                   <View style={styles.communicationInfo}>
-                    <Text style={styles.communicationTitle}>💚 WhatsApp</Text>
+                    <View style={styles.communicationTitleRow}>
+                      <Icon name="whatsapp" size={20} color={COLORS.primary} style={styles.communicationIcon} />
+                      <Text style={styles.communicationTitle}>WhatsApp</Text>
+                    </View>
                     <Text style={styles.communicationSubtext}>Community news and events</Text>
                   </View>
                   <Switch
@@ -384,6 +394,13 @@ const styles = StyleSheet.create({
   communicationSubtext: {
     fontSize: TYPOGRAPHY.fontSizes.sm,
     color: COLORS.textSecondary,
+  },
+  communicationTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  communicationIcon: {
+    marginRight: SPACING.sm,
   },
   footer: {
     paddingHorizontal: SPACING.lg,

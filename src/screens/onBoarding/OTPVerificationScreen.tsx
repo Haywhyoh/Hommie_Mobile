@@ -153,16 +153,16 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
           {/* Main Content */}
           <View style={styles.mainContent}>
             <Text style={styles.description}>
-              We've sent a 6-digit verification code to
+              We've sent a 6-digit code to
             </Text>
             
             <Text style={styles.phoneNumber}>
               {phoneNumber}
             </Text>
 
-            <Text style={styles.instruction}>
+            {/* <Text style={styles.instruction}>
               Enter the code below to verify your account
-            </Text>
+            </Text> */}
 
             {/* OTP Input */}
             <View style={styles.otpContainer}>
@@ -206,21 +206,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
               )}
             </View>
 
-            {/* Fallback Options */}
-            <View style={styles.fallbackSection}>
-              <Text style={styles.fallbackTitle}>Didn't get the code?</Text>
-              
-              <TouchableOpacity style={styles.fallbackOption} onPress={handleCallMe}>
-                <Text style={styles.fallbackIcon}>📞</Text>
-                <View style={styles.fallbackInfo}>
-                  <Text style={styles.fallbackText}>Call me instead</Text>
-                  <Text style={styles.fallbackSubtext}>We'll call you with the code</Text>
-                </View>
-                <Text style={styles.fallbackArrow}>→</Text>
-              </TouchableOpacity>
-
-           
-            </View>
+        
           </View>
 
           {/* Verify Button */}
@@ -246,6 +232,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   keyboardView: {
     flex: 1,
@@ -272,26 +260,23 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     fontWeight: '600',
   },
-  title: {
-    fontSize: TYPOGRAPHY.fontSizes.xxl,
-    fontWeight: '700',
-    color: COLORS.text,
-    lineHeight: 32,
-  },
+
   mainContent: {
     flex: 1,
     alignItems: 'center',
     marginBottom: SPACING.lg,
+    marginTop: SPACING.xl,
+    justifyContent: 'center',
   },
   description: {
     fontSize: TYPOGRAPHY.fontSizes.md,
     color: COLORS.textSecondary,
     textAlign: 'center',
-    marginBottom: SPACING.sm,
+    marginBottom: SPACING.md,
   },
   phoneNumber: {
     fontSize: TYPOGRAPHY.fontSizes.lg,
-    fontWeight: '600',
+    fontWeight: '500',
     color: COLORS.text,
     marginBottom: SPACING.lg,
   },
@@ -316,7 +301,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
     borderRadius: BORDER_RADIUS.md,
     fontSize: TYPOGRAPHY.fontSizes.xxl,
-    fontWeight: '600',
+    fontWeight: '400',
     color: COLORS.text,
     textAlign: 'center',
     backgroundColor: COLORS.white,
@@ -339,49 +324,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontWeight: '500',
   },
-  fallbackSection: {
-    width: '100%',
-    marginTop: SPACING.lg,
-  },
-  fallbackTitle: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
-    fontWeight: '600',
-    color: COLORS.text,
-    textAlign: 'center',
-    marginBottom: SPACING.md,
-  },
-  fallbackOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.offWhite,
-    padding: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
-    marginBottom: SPACING.sm,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-  },
-  fallbackIcon: {
-    fontSize: 20,
-    marginRight: SPACING.md,
-  },
-  fallbackInfo: {
-    flex: 1,
-  },
-  fallbackText: {
-    fontSize: TYPOGRAPHY.fontSizes.md,
-    fontWeight: '500',
-    color: COLORS.text,
-    marginBottom: SPACING.xs,
-  },
-  fallbackSubtext: {
-    fontSize: TYPOGRAPHY.fontSizes.sm,
-    color: COLORS.textSecondary,
-  },
-  fallbackArrow: {
-    fontSize: TYPOGRAPHY.fontSizes.lg,
-    color: COLORS.primary,
-    fontWeight: '600',
-  },
+  
   verifyButton: {
     backgroundColor: COLORS.primary,
     paddingVertical: SPACING.md,
