@@ -36,6 +36,7 @@ import ProfessionalSkillsScreen from './src/screens/ProfessionalSkillsScreen';
 import LocalBusinessDirectoryScreen from './src/screens/LocalBusinessDirectoryScreen';
 import CommunityActivityScreen from './src/screens/CommunityActivityScreen';
 import NeighborRatingScreen from './src/screens/NeighborRatingScreen';
+import CommunityEngagementScreen from './src/screens/CommunityEngagementScreen';
 import LoginScreen from './src/screens/onBoarding/LoginScreen';
 import RegisterScreen from './src/screens/onBoarding/RegisterScreen';
 
@@ -137,6 +138,7 @@ function MainStackNavigator() {
       {/* Community Screens */}
       <Stack.Screen name="CommunityActivity" component={CommunityActivityScreen} />
       <Stack.Screen name="NeighborRating" component={NeighborRatingScreen} />
+      <Stack.Screen name="CommunityEngagement" component={CommunityEngagementScreen} />
     </Stack.Navigator>
   );
 }
