@@ -15,6 +15,7 @@ export default function HomeScreen() {
     lastName: 'Ogundimu',
     profileImage: null, // null means we'll show initials
     hasBusinessProfile: true,
+    pendingConnectionRequests: 3, // Mock pending requests count
   };
 
   const handleProfilePress = () => {
@@ -36,6 +37,10 @@ export default function HomeScreen() {
           onPress: () => navigation.navigate('CommunityActivity' as never)
         },
         {
+          text: 'Neighbor Network',
+          onPress: () => navigation.navigate('NeighborConnections' as never)
+        },
+        {
           text: 'Local Businesses',
           onPress: () => navigation.navigate('LocalBusinessDirectory' as never)
         },
@@ -54,7 +59,29 @@ export default function HomeScreen() {
   };
 
   const handleAddNeighbor = () => {
-    Alert.alert('Add Neighbor', 'Invite neighbors to join your community');
+    // Navigate to social features screen
+    Alert.alert(
+      'Connect with Neighbors',
+      'Build your community network',
+      [
+        {
+          text: 'Find Neighbors',
+          onPress: () => navigation.navigate('NeighborConnections' as never, { initialTab: 'discover' })
+        },
+        {
+          text: 'My Connections',
+          onPress: () => navigation.navigate('NeighborConnections' as never, { initialTab: 'connections' })
+        },
+        {
+          text: 'Connection Requests',
+          onPress: () => navigation.navigate('NeighborConnections' as never, { initialTab: 'requests' })
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        }
+      ]
+    );
   };
 
   const handleMessages = () => {
@@ -103,6 +130,13 @@ export default function HomeScreen() {
           <View style={styles.headerActions}>
             <TouchableOpacity style={styles.headerAction} onPress={handleAddNeighbor}>
               <MaterialCommunityIcons name="account-plus" size={24} color="#2C2C2C" />
+              {currentUser.pendingConnectionRequests > 0 && (
+                <View style={styles.notificationBadge}>
+                  <Text style={styles.notificationText}>
+                    {currentUser.pendingConnectionRequests > 9 ? '9+' : currentUser.pendingConnectionRequests}
+                  </Text>
+                </View>
+              )}
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerAction} onPress={handleMessages}>
               <MaterialCommunityIcons name="chat" size={24} color="#2C2C2C" />
@@ -322,6 +356,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
+   
   },
   profileSection: {
     marginRight: 12,
@@ -379,6 +414,26 @@ const styles = StyleSheet.create({
   },
   headerAction: {
     marginLeft: 16,
+    position: 'relative',
+  },
+  notificationBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    backgroundColor: '#E74C3C',
+    borderRadius: 10,
+    minWidth: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+  },
+  notificationText: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    textAlign: 'center',
   },
   scrollView: {
     flex: 1,

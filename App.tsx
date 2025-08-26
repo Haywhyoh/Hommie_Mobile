@@ -37,6 +37,7 @@ import LocalBusinessDirectoryScreen from './src/screens/LocalBusinessDirectorySc
 import CommunityActivityScreen from './src/screens/CommunityActivityScreen';
 import NeighborRatingScreen from './src/screens/NeighborRatingScreen';
 import CommunityEngagementScreen from './src/screens/CommunityEngagementScreen';
+import NeighborConnectionsScreen from './src/screens/NeighborConnectionsScreen';
 import LoginScreen from './src/screens/onBoarding/LoginScreen';
 import RegisterScreen from './src/screens/onBoarding/RegisterScreen';
 
@@ -139,6 +140,7 @@ function MainStackNavigator() {
       <Stack.Screen name="CommunityActivity" component={CommunityActivityScreen} />
       <Stack.Screen name="NeighborRating" component={NeighborRatingScreen} />
       <Stack.Screen name="CommunityEngagement" component={CommunityEngagementScreen} />
+      <Stack.Screen name="NeighborConnections" component={NeighborConnectionsScreen} />
     </Stack.Navigator>
   );
 }
