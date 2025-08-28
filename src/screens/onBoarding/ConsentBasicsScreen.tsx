@@ -82,7 +82,7 @@ export default function ConsentBasicsScreen({ navigation, route }: any) {
                 {showFullPolicy && (
                   <View style={styles.fullPolicy}>
                     <Text style={styles.policyText}>
-                      By using Hommie, you agree to our collection and use of your information to:
+                      By using HoodMe, you agree to our collection and use of your information to:
                       {'\n\n'}• Connect you with verified neighbors in your area
                       {'\n'}• Send important safety and community updates
                       {'\n'}• Improve our services and community features
@@ -100,7 +100,7 @@ export default function ConsentBasicsScreen({ navigation, route }: any) {
                     {hasConsented && <Text style={styles.checkmark}>✓</Text>}
                   </View>
                   <Text style={styles.consentCheckboxText}>
-                    I agree to Hommie's data use and privacy policy
+                    I agree to HoodMe's data use and privacy policy
                   </Text>
                 </TouchableOpacity>
               </View>

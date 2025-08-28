@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, TextInput, Alert, Dimensions } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
+import { safeGoBack } from '../utils/navigationUtils';
 import { 
   CONNECTION_TYPES,
   TRUSTED_NEIGHBOR_LEVELS,
@@ -18,6 +20,7 @@ interface NeighborConnectionsScreenProps {
 }
 
 export default function NeighborConnectionsScreen({ userId = 'user_123' }: NeighborConnectionsScreenProps) {
+  const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState<'connections' | 'discover' | 'requests'>('connections');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
@@ -650,7 +653,10 @@ export default function NeighborConnectionsScreen({ userId = 'user_123' }: Neigh
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => safeGoBack(navigation)}
+        >
           <MaterialCommunityIcons name="arrow-left" size={24} color="#2C2C2C" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Connections</Text>

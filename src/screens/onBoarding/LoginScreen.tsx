@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { safeGoBack } from '../../utils/navigationUtils';
 
 const { width, height } = Dimensions.get('window');
 
@@ -68,7 +69,7 @@ export default function LoginScreen({ navigation, route }: any) {
       
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.appName}>hommie</Text>
+          <Text style={styles.appName}>HoodMe</Text>
           <Text style={styles.tagline}>Welcome back to your neighborhood</Text>
         </View>
 
@@ -109,7 +110,7 @@ export default function LoginScreen({ navigation, route }: any) {
           {/* Sign Up Section */}
           <View style={styles.loginSection}>
             <Text style={styles.loginPrompt}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
+            <TouchableOpacity onPress={() => safeGoBack(navigation, 'Welcome')}>
               <Text style={styles.loginLink}>Sign Up</Text>
             </TouchableOpacity>
           </View>

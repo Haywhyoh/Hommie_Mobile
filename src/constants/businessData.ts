@@ -4,7 +4,7 @@ export const BUSINESS_CATEGORIES = [
   {
     id: 'household-services',
     name: 'Household Services',
-    icon: 'home-repair',
+    icon: 'home-variant',
     color: '#00A651',
     description: 'Home maintenance and household help',
     subcategories: [
@@ -61,7 +61,7 @@ export const BUSINESS_CATEGORIES = [
   {
     id: 'automotive',
     name: 'Automotive Services',
-    icon: 'car-repair',
+    icon: 'car-wrench',
     color: '#FF6B35',
     description: 'Vehicle services and repairs',
     subcategories: [
@@ -80,7 +80,7 @@ export const BUSINESS_CATEGORIES = [
   {
     id: 'food-catering',
     name: 'Food & Catering',
-    icon: 'food',
+    icon: 'food-variant',
     color: '#FFC107',
     description: 'Food services and catering',
     subcategories: [
@@ -137,7 +137,7 @@ export const BUSINESS_CATEGORIES = [
   {
     id: 'events-entertainment',
     name: 'Events & Entertainment',
-    icon: 'calendar-star',
+    icon: 'calendar-check',
     color: '#FF69B4',
     description: 'Event and entertainment services',
     subcategories: [
@@ -350,7 +350,7 @@ export const PAYMENT_METHODS = [
     id: 'bank-transfer',
     name: 'Bank Transfer',
     description: 'Direct bank account transfer',
-    icon: 'bank-transfer',
+    icon: 'bank',
     popular: true,
   },
   {
@@ -364,7 +364,7 @@ export const PAYMENT_METHODS = [
     id: 'pos',
     name: 'POS Terminal',
     description: 'Card payment via POS',
-    icon: 'credit-card',
+    icon: 'credit-card-outline',
     popular: false,
   },
   {

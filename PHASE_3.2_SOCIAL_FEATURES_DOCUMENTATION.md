@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides comprehensive documentation for the implementation of Phase 3.2 Social Features in the Hommie Mobile app. This phase introduces a sophisticated neighbor connection and trust system designed specifically for Nigerian community dynamics, focusing on building safe, trusted relationships within estates and compounds.
+This document provides comprehensive documentation for the implementation of Phase 3.2 Social Features in the HoodMe Mobile app. This phase introduces a sophisticated neighbor connection and trust system designed specifically for Nigerian community dynamics, focusing on building safe, trusted relationships within estates and compounds.
 
 ## Table of Contents
 
@@ -347,7 +347,7 @@ interface PrivacyLevel {
 - **Privileges**: Direct messaging, event invitations, favor requests
 - **Use Case**: General neighbor networking
 - **Icon**: account-multiple-plus
-- **Color**: #00A651 (Hommie Green)
+- **Color**: #00A651 (HoodMe Green)
 
 **3. Trusted Connection**
 - **Purpose**: High-trust relationships for important matters
@@ -381,7 +381,7 @@ interface PrivacyLevel {
 
 **Level 2: Known Neighbor (25-49 Trust Score)**
 - **Icon**: account-check
-- **Color**: #00A651 (Hommie Green)
+- **Color**: #00A651 (HoodMe Green)
 - **Requirements**: 5+ connections, 1+ month in estate, positive ratings
 - **Privileges**: Group invitations, event hosting, favor requests
 - **Nigerian Context**: "Person wey we know small small"
@@ -964,4 +964,4 @@ The system's emphasis on trust, safety, and community building aligns perfectly 
 
 The integration with Phase 3.1 gamification features creates a cohesive user experience that rewards positive social behavior and encourages community building through trusted relationships. The comprehensive trust and safety framework ensures that users can build reliable support networks within their estates while maintaining appropriate privacy and security controls.
 
-This implementation establishes a strong foundation for future social features and positions Hommie as a leader in community-focused social networking for Nigerian neighborhoods.
+This implementation establishes a strong foundation for future social features and positions HoodMe as a leader in community-focused social networking for Nigerian neighborhoods.

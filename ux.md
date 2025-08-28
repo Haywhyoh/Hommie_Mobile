@@ -1,10 +1,10 @@
-# Hommie Community App Style Guide
+# HoodMe Community App Style Guide
 *Modern Nigerian Neighborhood Design System*
 
 ## 🎨 Brand Colors
 
 ### Primary Palette - Community Trust
-- **Hommie Green**: `#00A651` - Nigeria's pride, main brand color for trust
+- **HoodMe Green**: `#00A651` - Nigeria's pride, main brand color for trust
 - **Deep Forest**: `#006B3C` - For pressed states, depth, security
 - **Sage Light**: `#E8F5E8` - Gentle backgrounds, peaceful spaces
 - **Community Mint**: `#B8E6B8` - Success states, positive connections

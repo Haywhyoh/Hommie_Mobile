@@ -1,10 +1,10 @@
 // App Configuration
 export const APP_CONFIG = {
-  name: 'Hommie',
+  name: 'HoodMe',
   version: '1.0.0',
   description: 'NextDoor for Nigeria - Connect with your neighborhood',
-  supportEmail: 'support@hommie.ng',
-  website: 'https://hommie.ng',
+  supportEmail: 'support@HoodMe.ng',
+  website: 'https://HoodMe.ng',
 };
 
 // Colors - Following Nigerian Style Guide
@@ -133,7 +133,7 @@ export const SHADOWS = {
 
 // API Configuration
 export const API_CONFIG = {
-  baseUrl: process.env.EXPO_PUBLIC_API_URL || 'https://api.hommie.ng',
+  baseUrl: process.env.EXPO_PUBLIC_API_URL || 'https://api.HoodMe.ng',
   timeout: 30000,
   retryAttempts: 3,
 };

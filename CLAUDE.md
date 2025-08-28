@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Hommie Mobile is a Nigerian community-focused mobile app ("NextDoor for Nigeria") built with React Native and Expo. The app connects neighbors within Nigerian estates/compounds, focusing on safety, local connections, and community building.
+HoodMe Mobile is a Nigerian community-focused mobile app ("NextDoor for Nigeria") built with React Native and Expo. The app connects neighbors within Nigerian estates/compounds, focusing on safety, local connections, and community building.
 
 ## Development Commands
 
@@ -54,7 +54,7 @@ The app follows a modern onboarding experience with two primary flows:
 The app follows a comprehensive design system defined in `ux.md`:
 
 #### Color System (Community-Focused)
-- **Primary**: `#00A651` (Hommie Green) - Main brand color for trust
+- **Primary**: `#00A651` (HoodMe Green) - Main brand color for trust
 - **Neutral Foundation**: Pure White, Warm Off-White, Soft Gray, Friendly Gray, Rich Charcoal
 - **Accent Colors**: Lagos Orange, Trust Blue, Safety Red, Warm Gold
 - **Nigerian Cultural Context**: Estate/compound terminology, local references

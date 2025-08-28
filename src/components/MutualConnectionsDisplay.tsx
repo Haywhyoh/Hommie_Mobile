@@ -569,9 +569,26 @@ export default function MutualConnectionsDisplay({
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <MaterialCommunityIcons name="loading" size={16} color="#00A651" />
-        <Text style={styles.loadingText}>Loading mutual connections...</Text>
+      <View style={connectionStyles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerInfo}>
+            <MaterialCommunityIcons name="account-group" size={16} color={connectionColors.secondary} />
+            <View style={[{ backgroundColor: connectionColors.backgroundSecondary, height: 14, width: 120, borderRadius: 4 }]} />
+          </View>
+        </View>
+        {[1, 2, 3].map(i => (
+          <View key={i} style={[styles.connectionCard, { opacity: 0.6 }]}>
+            <View style={styles.connectionHeader}>
+              <View style={styles.neighborInfo}>
+                <View style={[styles.neighborAvatar, { backgroundColor: connectionColors.backgroundSecondary }]} />
+                <View style={styles.neighborDetails}>
+                  <View style={[{ backgroundColor: connectionColors.backgroundSecondary, height: 12, borderRadius: 4, marginBottom: 4, width: '60%' }]} />
+                  <View style={[{ backgroundColor: connectionColors.backgroundSecondary, height: 10, width: '80%', borderRadius: 4 }]} />
+                </View>
+              </View>
+            </View>
+          </View>
+        ))}
       </View>
     );
   }
@@ -624,7 +641,7 @@ export default function MutualConnectionsDisplay({
                 {showConnectionStrength && (
                   <View style={[
                     styles.compactStrengthDot,
-                    { backgroundColor: getConnectionStrengthColor(connection.connectionStrength) }
+                    { backgroundColor: ConnectionService.getStrengthColor(connection.connectionStrength) }
                   ]} />
                 )}
               </TouchableOpacity>
@@ -642,7 +659,7 @@ export default function MutualConnectionsDisplay({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={connectionStyles.container}>
       <View style={styles.header}>
         <View style={styles.headerInfo}>
           <MaterialCommunityIcons name="account-group" size={16} color="#0066CC" />
@@ -676,21 +693,11 @@ export default function MutualConnectionsDisplay({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000000',
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
-  },
+  // Compact mode specific styles
   compactContainer: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: connectionColors.backgroundSecondary,
     borderRadius: 8,
-    padding: 12,
+    padding: connectionSizes.spacingSmall,
   },
   compactHeader: {
     flexDirection: 'row',
@@ -698,15 +705,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   compactTitle: {
-    fontSize: 12,
+    ...connectionStyles.captionText,
     fontWeight: '600',
-    color: '#2C2C2C',
+    color: connectionColors.textPrimary,
     flex: 1,
     marginLeft: 6,
   },
   compactExpanded: {
-    marginTop: 12,
-    paddingTop: 12,
+    marginTop: connectionSizes.spacingSmall,
+    paddingTop: connectionSizes.spacingSmall,
     borderTopWidth: 1,
     borderTopColor: '#E8E8E8',
   },
@@ -716,22 +723,22 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   compactAvatar: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: '#0066CC',
+    width: connectionSizes.avatarTiny,
+    height: connectionSizes.avatarTiny,
+    borderRadius: connectionSizes.avatarTiny / 2,
+    backgroundColor: connectionColors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 8,
+    marginRight: connectionSizes.spacingXSmall,
   },
   compactAvatarText: {
     fontSize: 9,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: connectionColors.textLight,
   },
   compactConnectionName: {
     fontSize: 11,
-    color: '#2C2C2C',
+    color: connectionColors.textPrimary,
     flex: 1,
   },
   compactStrengthDot: {
@@ -742,73 +749,56 @@ const styles = StyleSheet.create({
   },
   compactMoreText: {
     fontSize: 10,
-    color: '#8E8E8E',
+    color: connectionColors.textSecondary,
     fontStyle: 'italic',
     textAlign: 'center',
-    marginTop: 8,
+    marginTop: connectionSizes.spacingXSmall,
   },
-  loadingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  loadingText: {
-    fontSize: 12,
-    color: '#8E8E8E',
-    marginLeft: 6,
-  },
-  emptyState: {
-    alignItems: 'center',
-    padding: 24,
-  },
-  emptyStateText: {
-    fontSize: 12,
-    color: '#8E8E8E',
-    textAlign: 'center',
-    marginTop: 8,
-  },
+  
+  // Header styles
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: connectionSizes.spacingMedium,
   },
   headerInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   headerTitle: {
-    fontSize: 14,
+    ...connectionStyles.secondaryText,
     fontWeight: '600',
-    color: '#2C2C2C',
+    color: connectionColors.textPrimary,
     marginLeft: 6,
   },
   analysisButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#E8F5E8',
-    paddingHorizontal: 8,
+    paddingHorizontal: connectionSizes.spacingXSmall,
     paddingVertical: 4,
     borderRadius: 12,
   },
   analysisButtonText: {
     fontSize: 10,
     fontWeight: '600',
-    color: '#00A651',
+    color: connectionColors.primary,
     marginLeft: 3,
   },
+  
+  // Connection card styles
   connectionCard: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: connectionColors.backgroundSecondary,
     borderRadius: 8,
-    padding: 12,
-    marginBottom: 8,
+    padding: connectionSizes.spacingSmall,
+    marginBottom: connectionSizes.spacingXSmall,
   },
   connectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 8,
+    marginBottom: connectionSizes.spacingXSmall,
   },
   neighborInfo: {
     flexDirection: 'row',
@@ -818,7 +808,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: '#0066CC',
+    backgroundColor: connectionColors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
@@ -826,7 +816,7 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: connectionColors.textLight,
   },
   neighborDetails: {
     flex: 1,
@@ -839,7 +829,7 @@ const styles = StyleSheet.create({
   neighborName: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#2C2C2C',
+    color: connectionColors.textPrimary,
     marginRight: 4,
   },
   locationSection: {
@@ -849,19 +839,15 @@ const styles = StyleSheet.create({
   },
   neighborLocation: {
     fontSize: 10,
-    color: '#8E8E8E',
+    color: connectionColors.textSecondary,
     marginLeft: 3,
   },
   strengthSection: {
     marginTop: 2,
   },
   strengthBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
+    ...connectionStyles.badge,
+    ...connectionStyles.smallBadge,
   },
   strengthText: {
     fontSize: 9,
@@ -870,26 +856,16 @@ const styles = StyleSheet.create({
   },
   connectionTypes: {
     alignItems: 'flex-end',
+    gap: 2,
   },
-  connectionTypeBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
-    marginBottom: 2,
-  },
-  connectionTypeText: {
-    fontSize: 8,
-    fontWeight: '600',
-    marginLeft: 2,
-  },
+  
+  // Shared interests
   sharedInterestsSection: {
     marginBottom: 6,
   },
   sharedInterestsLabel: {
     fontSize: 9,
-    color: '#8E8E8E',
+    color: connectionColors.textSecondary,
     marginBottom: 4,
   },
   interestsList: {
@@ -897,176 +873,20 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
   },
-  interestTag: {
-    backgroundColor: '#E8F5E8',
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-    borderRadius: 6,
-    marginRight: 4,
-    marginBottom: 2,
-  },
-  interestText: {
-    fontSize: 8,
-    color: '#00A651',
-    fontWeight: '600',
-  },
   moreInterests: {
     fontSize: 8,
-    color: '#8E8E8E',
+    color: connectionColors.textSecondary,
     fontStyle: 'italic',
   },
+  
+  // Last interaction
   lastInteractionSection: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   lastInteractionText: {
     fontSize: 9,
-    color: '#8E8E8E',
+    color: connectionColors.textSecondary,
     marginLeft: 3,
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F5F5F5',
-  },
-  closeButton: {
-    marginRight: 12,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#2C2C2C',
-  },
-  modalContent: {
-    flex: 1,
-    padding: 16,
-  },
-  analysisSection: {
-    marginBottom: 24,
-  },
-  analysisSectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#2C2C2C',
-    marginBottom: 12,
-  },
-  analysisGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  analysisItem: {
-    width: '48%',
-    backgroundColor: '#F5F5F5',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  analysisNumber: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#2C2C2C',
-  },
-  analysisLabel: {
-    fontSize: 10,
-    color: '#8E8E8E',
-    textAlign: 'center',
-    marginTop: 2,
-  },
-  densityCard: {
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 8,
-  },
-  densityIndicator: {
-    height: 6,
-    backgroundColor: '#E8E8E8',
-    borderRadius: 3,
-    marginBottom: 8,
-  },
-  densityBar: {
-    height: '100%',
-    backgroundColor: '#00A651',
-    borderRadius: 3,
-  },
-  densityText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#2C2C2C',
-    textAlign: 'center',
-  },
-  densityDescription: {
-    fontSize: 11,
-    color: '#8E8E8E',
-    lineHeight: 16,
-  },
-  pathCard: {
-    backgroundColor: '#F0F8FF',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 8,
-  },
-  pathHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  pathStrength: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#0066CC',
-  },
-  pathDescription: {
-    fontSize: 11,
-    color: '#2C2C2C',
-    marginBottom: 6,
-  },
-  pathInterests: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  pathInterestTag: {
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 8,
-    marginRight: 4,
-    marginBottom: 2,
-  },
-  pathInterestText: {
-    fontSize: 9,
-    color: '#0066CC',
-    fontWeight: '600',
-  },
-  recommendationCard: {
-    flexDirection: 'row',
-    backgroundColor: '#E8F5E8',
-    borderRadius: 8,
-    padding: 12,
-    alignItems: 'flex-start',
-  },
-  recommendationContent: {
-    flex: 1,
-    marginLeft: 8,
-  },
-  recommendationTitle: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#00A651',
-    marginBottom: 4,
-  },
-  recommendationText: {
-    fontSize: 11,
-    color: '#2C2C2C',
-    lineHeight: 16,
   },
 });
