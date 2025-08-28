@@ -1,4 +1,4 @@
-# Onboarding UX Improvements for Hommie Mobile
+# Onboarding UX Improvements for HoodMe Mobile
 
 ## Overview
 I've redesigned the onboarding flow to address the UX issues and implement modern, community-focused design patterns following the style guide specifications.

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { contextAwareGoBack } from '../utils/navigationUtils';
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
@@ -9,7 +10,7 @@ export default function ProfileScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={styles.backButton} onPress={() => contextAwareGoBack(navigation, 'main')}>
           <MaterialCommunityIcons name="arrow-left" size={24} color="#2C2C2C" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
@@ -93,7 +94,7 @@ export default function ProfileScreen() {
 
         {/* Profile Enhancement */}
         <View style={styles.section}>
-          <Text style={styles.enhancementTitle}>Better profile, better Hommie</Text>
+          <Text style={styles.enhancementTitle}>Better profile, better HoodMe</Text>
           <Text style={styles.enhancementSubtitle}>It's true. Share your story and you'll get more replies from posts and listings.</Text>
           
           <TouchableOpacity style={styles.bioCard} onPress={() => navigation.navigate('CulturalProfile' as never)}>

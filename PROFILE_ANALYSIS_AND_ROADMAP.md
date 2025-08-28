@@ -1,4 +1,4 @@
-# Hommie Profile Features Analysis & Roadmap
+# HoodMe Profile Features Analysis & Roadmap
 
 ## Nextdoor Profile Analysis
 
@@ -42,7 +42,7 @@
 
 ---
 
-## Hommie Profile Enhancement Plan
+## HoodMe Profile Enhancement Plan
 
 ### Phase 1: Basic Profile Foundation
 **Priority: High | Timeline: 2-3 weeks**
@@ -240,4 +240,4 @@
 - Local government integration
 - Infrastructure improvement tracking
 
-This roadmap positions Hommie as a culturally-aware, gamified community platform that goes beyond Nextdoor's basic social features to create a comprehensive Nigerian neighborhood ecosystem.
+This roadmap positions HoodMe as a culturally-aware, gamified community platform that goes beyond Nextdoor's basic social features to create a comprehensive Nigerian neighborhood ecosystem.

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Image, Alert } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { BUSINESS_VERIFICATION_LEVELS, formatNairaCurrency, calculateAverageRating } from '../constants/businessData';
+import { useNavigation } from '@react-navigation/native';
 
 interface BusinessProfile {
   id: string;
@@ -58,8 +59,14 @@ export default function BusinessProfileScreen() {
     joinedDate: '2024-03-15',
   });
 
+  const navigation = useNavigation();
+
   const getVerificationInfo = () => {
     return BUSINESS_VERIFICATION_LEVELS.find(level => level.id === businessProfile.verificationLevel);
+  };
+
+  const handleBackPress = () => {
+    navigation.goBack();
   };
 
   const handleEditProfile = () => {
@@ -100,7 +107,12 @@ export default function BusinessProfileScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={handleBackPress}
+          activeOpacity={0.7}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
           <MaterialCommunityIcons name="arrow-left" size={24} color="#2C2C2C" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Business Profile</Text>
@@ -313,6 +325,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFAFA',
+    paddingTop: 100,
   },
   header: {
     backgroundColor: '#FFFFFF',
@@ -325,8 +338,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F0F0F0',
   },
   backButton: {
-    padding: 8,
+    padding: 12,
     marginRight: 8,
+    minWidth: 44,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
   },
   headerTitle: {
     flex: 1,

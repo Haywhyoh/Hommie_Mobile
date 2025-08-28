@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { safeGoBack, contextAwareGoBack } from '../../utils/navigationUtils';
 
 export default function EmailLoginScreen({ navigation, route }: any) {
   const [email, setEmail] = useState('');
@@ -93,7 +94,7 @@ export default function EmailLoginScreen({ navigation, route }: any) {
           <View style={styles.header}>
             <TouchableOpacity 
               style={styles.backButton}
-              onPress={() => navigation.goBack()}
+              onPress={() => contextAwareGoBack(navigation, 'onboarding')}
             >
               <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>
@@ -176,7 +177,7 @@ export default function EmailLoginScreen({ navigation, route }: any) {
             
             <TouchableOpacity 
               style={styles.signUpPrompt}
-              onPress={() => navigation.navigate('Welcome')}
+              onPress={() => safeGoBack(navigation, 'Welcome')}
             >
               <Text style={styles.signUpText}>
                 Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text>

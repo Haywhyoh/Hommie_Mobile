@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, KeyboardAvoidingView, Platform, Alert, ScrollView } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { contextAwareGoBack } from '../../utils/navigationUtils';
 
 const NIGERIAN_CARRIERS = [
   { name: 'MTN', codes: ['080', '081', '090', '070', '091', '0816', '0813', '0814', '0810', '0811', '0812', '0703', '0706', '0704', '0705', '0708', '0709', '0903', '0906', '0904', '0905', '0908', '0909'] },
@@ -88,7 +89,7 @@ export default function PhoneVerificationScreen({ navigation, route }: any) {
           <View style={styles.header}>
             <TouchableOpacity 
               style={styles.backButton}
-              onPress={() => navigation.goBack()}
+              onPress={() => contextAwareGoBack(navigation, 'onboarding')}
             >
               <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>

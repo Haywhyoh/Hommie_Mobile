@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import BackButton from '../../components/BackButton';
 
 export default function OnboardingScreen({ navigation, route }: any) {
   const handleGetStarted = () => {
@@ -18,9 +19,18 @@ export default function OnboardingScreen({ navigation, route }: any) {
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
       
       <View style={styles.content}>
+        {/* Back Button */}
+        <View style={styles.backButtonContainer}>
+          <BackButton 
+            context="onboarding"
+            hideIfCantGoBack={true}
+            fallbackRoute="Welcome"
+          />
+        </View>
+
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Welcome to Hommie</Text>
+          <Text style={styles.title}>Welcome to HoodMe</Text>
           <Text style={styles.subtitle}>Your Nigerian Neighborhood Community</Text>
         </View>
 
@@ -75,8 +85,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SPACING.lg,
     justifyContent: 'space-between',
-    paddingTop: SPACING.xxxl,
+    paddingTop: SPACING.md,
     paddingBottom: SPACING.xl,
+  },
+  backButtonContainer: {
+    alignItems: 'flex-start',
+    marginBottom: SPACING.lg,
   },
   header: {
     alignItems: 'center',

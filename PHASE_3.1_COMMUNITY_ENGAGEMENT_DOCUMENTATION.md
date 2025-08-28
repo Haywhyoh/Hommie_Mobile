@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides comprehensive documentation for the implementation of Phase 3.1 Community Engagement features in the Hommie Mobile app. This phase introduces a sophisticated gamification and activity tracking system designed specifically for Nigerian community dynamics.
+This document provides comprehensive documentation for the implementation of Phase 3.1 Community Engagement features in the HoodMe Mobile app. This phase introduces a sophisticated gamification and activity tracking system designed specifically for Nigerian community dynamics.
 
 ## Table of Contents
 

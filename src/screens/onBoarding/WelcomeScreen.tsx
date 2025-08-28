@@ -97,7 +97,7 @@ export default function WelcomeScreen({ navigation, route }: any) {
       
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.appName}>hommie</Text>
+          <Text style={styles.appName}>HoodMe</Text>
           <Text style={styles.tagline}>Explore your neighborhood</Text>
         </View>
 

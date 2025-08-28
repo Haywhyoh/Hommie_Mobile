@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, StatusBar, KeyboardAvoidingView, Platform, Alert, ScrollView } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { contextAwareGoBack } from '../../utils/navigationUtils';
 
 export default function OTPVerificationScreen({ navigation, route }: any) {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -144,7 +145,7 @@ export default function OTPVerificationScreen({ navigation, route }: any) {
           <View style={styles.header}>
             <TouchableOpacity 
               style={styles.backButton}
-              onPress={() => navigation.goBack()}
+              onPress={() => contextAwareGoBack(navigation, 'onboarding')}
             >
               <Text style={styles.backButtonText}>←</Text>
             </TouchableOpacity>

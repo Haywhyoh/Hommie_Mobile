@@ -1,10 +1,10 @@
-# Hommie Mobile App
+# HoodMe Mobile App
 
 **NextDoor for Nigeria - Connect with your neighborhood community**
 
 ## 🚀 Project Overview
 
-Hommie is a mobile application designed to foster community connection, information exchange, and collaboration among individuals living in various neighborhoods across Nigeria. The app allows users to interact with their neighbors, share local news, organize events, seek services, and offer recommendations, all within a trusted and geographically relevant environment.
+HoodMe is a mobile application designed to foster community connection, information exchange, and collaboration among individuals living in various neighborhoods across Nigeria. The app allows users to interact with their neighbors, share local news, organize events, seek services, and offer recommendations, all within a trusted and geographically relevant environment.
 
 ## ✨ Features
 
@@ -55,7 +55,7 @@ Hommie is a mobile application designed to foster community connection, informat
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd Hommie_Mobile
+   cd HoodMe_Mobile
    ```
 
 2. **Install dependencies**
@@ -143,7 +143,7 @@ src/
 Create a `.env` file in the root directory:
 
 ```env
-EXPO_PUBLIC_API_URL=https://api.hommie.ng
+EXPO_PUBLIC_API_URL=https://api.HoodMe.ng
 EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 EXPO_PUBLIC_SMS_SERVICE_API_KEY=your_sms_service_api_key
 ```
@@ -199,8 +199,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Email**: support@hommie.ng
-- **Website**: https://hommie.ng
+- **Email**: support@HoodMe.ng
+- **Website**: https://HoodMe.ng
 - **Documentation**: [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md)
 
 ## 🙏 Acknowledgments

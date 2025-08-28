@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, ScrollView, Alert } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import { contextAwareGoBack } from '../../utils/navigationUtils';
 
 const LOCATION_OPTIONS = [
   {
@@ -66,12 +67,12 @@ export default function LocationSetupScreen({ navigation, route }: any) {
   const handleGPSLocation = () => {
     Alert.alert(
       'Location Access',
-      'Hommie needs access to your location to show you relevant community updates.',
+      'HoodMe needs access to your location to show you relevant community updates.',
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Allow', onPress: () => {
           // TODO: Implement GPS location access
-          Alert.alert('Location Detected', 'Your location has been detected. Welcome to Hommie!');
+          Alert.alert('Location Detected', 'Your location has been detected. Welcome to HoodMe!');
           if (onSetupComplete) onSetupComplete();
         }}
       ]
@@ -91,7 +92,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
   const handleContinue = () => {
     if (selectedOption === 'landmark' && selectedLandmark) {
       // TODO: Save landmark selection and proceed
-      Alert.alert('Location Set', `You've selected ${selectedLandmark.name}. Welcome to Hommie!`);
+      Alert.alert('Location Set', `You've selected ${selectedLandmark.name}. Welcome to HoodMe!`);
       if (onSetupComplete) onSetupComplete();
     } else if (selectedOption === 'gps') {
       // GPS already handled
@@ -123,7 +124,7 @@ export default function LocationSetupScreen({ navigation, route }: any) {
         <View style={styles.header}>
           <TouchableOpacity 
             style={styles.backButton}
-            onPress={() => navigation.goBack()}
+            onPress={() => contextAwareGoBack(navigation, 'onboarding')}
           >
             <Text style={styles.backButtonText}>←</Text>
           </TouchableOpacity>

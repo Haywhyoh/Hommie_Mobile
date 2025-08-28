@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
+import { contextAwareGoBack } from '../utils/navigationUtils';
 import { BUSINESS_CATEGORIES, SERVICE_AREAS, formatNairaCurrency } from '../constants/businessData';
 import { NIGERIAN_STATES } from '../constants/nigerianData';
 
@@ -39,6 +41,7 @@ interface BusinessListing {
 }
 
 export default function LocalBusinessDirectoryScreen() {
+  const navigation = useNavigation();
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedServiceArea, setSelectedServiceArea] = useState<string>('neighborhood');
@@ -236,17 +239,22 @@ export default function LocalBusinessDirectoryScreen() {
       >
         <View style={styles.cardHeader}>
           <View style={styles.businessInfo}>
-            {business.profileImage ? (
-              <Image source={{ uri: business.profileImage }} style={styles.businessAvatar} />
-            ) : (
-              <View style={[styles.businessAvatar, { backgroundColor: category?.color || '#00A651' }]}>
-                <MaterialCommunityIcons 
-                  name={category?.icon as any || 'store'} 
-                  size={20} 
-                  color="#FFFFFF" 
-                />
-              </View>
-            )}
+            <View style={styles.avatarContainer}>
+              {business.profileImage ? (
+                <Image source={{ uri: business.profileImage }} style={styles.businessAvatar} />
+              ) : (
+                <View style={[styles.businessAvatar, { backgroundColor: category?.color || '#00A651' }]}>
+                  <MaterialCommunityIcons 
+                    name={category?.icon as any || 'store'} 
+                    size={20} 
+                    color="#FFFFFF" 
+                  />
+                </View>
+              )}
+              {business.isActive && (
+                <View style={styles.statusDotOnAvatar} />
+              )}
+            </View>
             
             <View style={styles.businessDetails}>
               <View style={styles.businessHeader}>
@@ -268,33 +276,10 @@ export default function LocalBusinessDirectoryScreen() {
               </View>
             </View>
           </View>
-
-          <View style={styles.statusIndicator}>
-            <View style={[styles.statusDot, { backgroundColor: business.isActive ? '#00A651' : '#E0E0E0' }]} />
-            <Text style={styles.statusText}>{business.isActive ? 'Online' : 'Offline'}</Text>
-          </View>
         </View>
 
         <Text style={styles.description} numberOfLines={2}>{business.description}</Text>
 
-        <View style={styles.businessMeta}>
-          <View style={styles.metaItem}>
-            <MaterialCommunityIcons name="map-marker" size={14} color="#8E8E8E" />
-            <Text style={styles.metaText}>{business.location.estate}</Text>
-          </View>
-          
-          <View style={styles.metaItem}>
-            <MaterialCommunityIcons name="clock-outline" size={14} color="#8E8E8E" />
-            <Text style={styles.metaText}>Response: {business.responseTime}</Text>
-          </View>
-          
-          <View style={styles.metaItem}>
-            <MaterialCommunityIcons name="currency-ngn" size={14} color="#8E8E8E" />
-            <Text style={styles.metaText}>
-              From {formatNairaCurrency(business.pricing.range.min)}
-            </Text>
-          </View>
-        </View>
 
         {business.badges.length > 0 && (
           <View style={styles.badgeContainer}>
@@ -331,7 +316,10 @@ export default function LocalBusinessDirectoryScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => contextAwareGoBack(navigation, 'main')}
+        >
           <MaterialCommunityIcons name="arrow-left" size={24} color="#2C2C2C" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Local Businesses</Text>
@@ -583,13 +571,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
   },
+  avatarContainer: {
+    position: 'relative',
+    marginRight: 12,
+  },
   businessAvatar: {
     width: 48,
     height: 48,
     borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+  },
+  statusDotOnAvatar: {
+    position: 'absolute',
+    bottom: 2,
+    right: 2,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#00A651',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
   businessDetails: {
     flex: 1,
@@ -630,40 +632,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#8E8E8E',
   },
-  statusIndicator: {
-    alignItems: 'center',
-  },
-  statusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginBottom: 2,
-  },
-  statusText: {
-    fontSize: 10,
-    color: '#8E8E8E',
-  },
   description: {
     fontSize: 14,
     color: '#2C2C2C',
     lineHeight: 20,
     marginBottom: 12,
-  },
-  businessMeta: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 12,
-  },
-  metaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 16,
-    marginBottom: 4,
-  },
-  metaText: {
-    fontSize: 12,
-    color: '#8E8E8E',
-    marginLeft: 4,
   },
   badgeContainer: {
     flexDirection: 'row',

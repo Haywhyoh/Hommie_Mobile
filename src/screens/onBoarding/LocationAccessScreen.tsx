@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from '../../constants';
+import BackButton from '../../components/BackButton';
 
 export default function LocationAccessScreen({ navigation }: any) {
   const handleContinue = () => {
@@ -21,6 +22,14 @@ export default function LocationAccessScreen({ navigation }: any) {
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
       
       <View style={styles.content}>
+        {/* Back Button */}
+        <View style={styles.backButtonContainer}>
+          <BackButton 
+            context="onboarding"
+            fallbackRoute="LocationSelection"
+          />
+        </View>
+
         {/* Main Content */}
         <View style={styles.mainContent}>
           <Text style={styles.title}>
@@ -28,7 +37,7 @@ export default function LocationAccessScreen({ navigation }: any) {
           </Text>
           
           <Text style={styles.description}>
-            If you're near your home, tap continue to confirm your neighborhood. This ensures Hommie neighbors are real people with real addresses.
+            If you're near your home, tap continue to confirm your neighborhood. This ensures HoodMe neighbors are real people with real addresses.
           </Text>
 
           {/* Creative Illustration */}
@@ -76,9 +85,13 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: SPACING.lg,
-    paddingTop: SPACING.xxxl,
+    paddingTop: SPACING.md,
     paddingBottom: SPACING.xl,
     justifyContent: 'space-between',
+  },
+  backButtonContainer: {
+    alignItems: 'flex-start',
+    marginBottom: SPACING.md,
   },
   mainContent: {
     flex: 1,

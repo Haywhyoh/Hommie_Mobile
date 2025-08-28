@@ -1,7 +1,7 @@
 // Onboarding Demo Data
 export const ONBOARDING_DATA = {
   welcome: {
-    title: "Welcome to Hommie",
+    title: "Welcome to HoodMe",
     subtitle: "Your Nigerian Neighborhood Community",
     description: "Local updates, security alerts, and neighbors—right where you live.",
     image: require('../../assets/icon.png'), // Using existing icon as placeholder
@@ -191,7 +191,7 @@ export const SAMPLE_USER = {
 
 // Sample invitation codes for testing
 export const SAMPLE_INVITATION_CODES = [
-  "HOMIE2024",
+  "HoodMe2024",
   "LAGOS001",
   "ABUJA2024",
   "COMMUNITY",

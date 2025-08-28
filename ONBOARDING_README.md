@@ -1,7 +1,7 @@
-# Hommie Mobile App - New Onboarding Flow
+# HoodMe Mobile App - New Onboarding Flow
 
 ## Overview
-This document describes the new streamlined onboarding flow for the Hommie mobile app, designed specifically for Nigerian users. The flow now separates new users from existing users and shows welcome content before language selection.
+This document describes the new streamlined onboarding flow for the HoodMe mobile app, designed specifically for Nigerian users. The flow now separates new users from existing users and shows welcome content before language selection.
 
 ## Flow Structure
 

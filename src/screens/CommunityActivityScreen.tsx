@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
+import { contextAwareGoBack } from '../utils/navigationUtils';
 
 const { width } = Dimensions.get('window');
 
@@ -84,6 +86,7 @@ const COMMUNITY_RANKS: CommunityRank[] = [
 ];
 
 export default function CommunityActivityScreen() {
+  const navigation = useNavigation();
   const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month' | 'year'>('month');
   const [showRankModal, setShowRankModal] = useState(false);
   const [showActivityModal, setShowActivityModal] = useState(false);
@@ -434,7 +437,10 @@ export default function CommunityActivityScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => contextAwareGoBack(navigation, 'main')}
+        >
           <MaterialCommunityIcons name="arrow-left" size={24} color="#2C2C2C" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Community Activity</Text>

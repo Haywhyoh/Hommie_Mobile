@@ -1,4 +1,4 @@
-# Development Log - Hommie Mobile App
+# Development Log - HoodMe Mobile App
 
 ## ✅ Completed Tasks
 
